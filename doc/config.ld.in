@@ -1,0 +1,24 @@
+-- -*- lua -*-
+title		= "strict @PACKAGE_VERSION@ Reference"
+project		= "strict @PACKAGE_VERSION@"
+description	= [[
+# Strict Declaration of Variables
+
+This is a light-weight library for Lua 5.1 (including LuaJIT), 5.2
+and 5.3 written in pure Lua.
+
+## LICENSE
+
+The code is copyright by its authors, and released under the MIT
+license (the same license as Lua itself).  There is no warranty.
+]]
+
+dir		= "."
+
+file		= "../strict.lua"
+
+format		= "markdown"
+
+sort		= false
+
+backtick_references = false
