@@ -1,5 +1,5 @@
 package = "strict"
-version = "1.0-1"
+version = "git-1"
 
 description = {
   summary = "Check for use of undeclared variables",
