@@ -22,6 +22,6 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    optparse = "strict.lua",
+    strict = "strict.lua",
   },
 }
