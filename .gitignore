@@ -2,4 +2,3 @@
 /*.rock
 /doc
 !/doc/config.ld.in
-/lib/std/strict/version.lua
