@@ -12,7 +12,8 @@ description = {
 }
 
 source = {
-  url = "git://github.com/lua-stdlib/strict.git",
+  url = "http://github.com/lua-stdlib/strict/archive/v1.0.zip",
+  dir = "strict-1.0",
 }
 
 dependencies = {
