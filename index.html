@@ -30,38 +30,43 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 <li><a href="#Metamethods">Metamethods </a></li>
-<li><a href="#Constants">Constants </a></li>
 </ul>
 
 
 <h2>Modules</h2>
 <ul class="$(kind=='Topics' and '' or 'nowrap'">
-  <li><strong>std.strict</strong></li>
+  <li><strong>strict</strong></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>std.strict</code></h1>
-<p>Checks uses of undeclared variables.</p>
+<h1>Module <code>strict</code></h1>
+<p>Diagnose uses of undeclared variables.</p>
 <p> All variables (including functions!) must be "declared" through a regular
  assignment (even assigning <code>nil</code> will do) in a strict scope before being
- used anywhere or assigned to inside a function.</p>
+ used anywhere or assigned to inside a nested scope.</p>
 
 <p> Use the callable returned by this module to interpose a strictness check
- proxy table to the given environment.</p>
-
-<p> The implementation calls <code>setfenv</code> appropriately in Lua 5.1 interpreters
- to ensure the same semantics.</p>
+ proxy table to the given environment.  The callable runs <code>setfenv</code>
+ appropriately in Lua 5.1 interpreters to ensure the semantic equivalence.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#strict">strict (env)</a></td>
-	<td class="summary">Enforce variable declarations required before use in scope <em>env</em>.</td>
+	<td class="summary">Require variable declarations before use in scope <em>env</em>.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#strict">strict</a></td>
+	<td class="summary">Module table.</td>
 	</tr>
 </table>
 <h2><a href="#Metamethods">Metamethods </a></h2>
@@ -76,14 +81,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#__call">__call (env)</a></td>
-	<td class="summary">Enforce strict variable declarations in <em>env</em> according to <code>_DEBUG</code>.</td>
+	<td class="summary">Enforce strict variable declarations in <em>env</em>.</td>
 	</tr>
-</table>
-<h2><a href="#Constants">Constants </a></h2>
-<table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#_VERSION">_VERSION</a></td>
-	<td class="summary">The release version of strict.</td>
+	<td class="name" nowrap><a href="#__index">__index (name)</a></td>
+	<td class="summary">Lazy loading of strict submodules.</td>
 	</tr>
 </table>
 
@@ -99,7 +101,10 @@
     <strong>strict (env)</strong>
     </dt>
     <dd>
-    Enforce variable declarations required before use in scope <em>env</em>.
+    Require variable declarations before use in scope <em>env</em>. </p>
+
+<p> Normally the module <a href="index.html#__call">strict:__call</a> metamethod is all you need,
+ but you can use this method for more complex situations.
 
 
     <h3>Parameters:</h3>
@@ -124,11 +129,37 @@
         <pre class="example">
  <span class="keyword">local</span> _ENV = <span class="global">setmetatable</span> ({}, {__index = _G})
  <span class="keyword">if</span> <span class="global">require</span> <span class="string">"std.debug_init"</span>._DEBUG.strict <span class="keyword">then</span>
-   _ENV = <span class="global">require</span> <span class="string">"std.strict"</span>.strict (_ENV)
+   _ENV = <span class="global">require</span> <span class="string">"strict"</span>.strict (_ENV)
  <span class="keyword">end</span>
  <span class="comment">-- ...and for Lua 5.1 compatibility:
 </span> <span class="keyword">if</span> <span class="global">rawget</span> (_G, <span class="string">"setfenv"</span>) ~= <span class="keyword">nil</span> <span class="keyword">then</span> setfenv (<span class="number">1</span>, _ENV) <span class="keyword">end</span></pre>
     </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "strict"></a>
+    <strong>strict</strong>
+    </dt>
+    <dd>
+    Module table.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">version</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
 </dl>
@@ -185,7 +216,7 @@
     <strong>__call (env)</strong>
     </dt>
     <dd>
-    Enforce strict variable declarations in <em>env</em> according to <code>_DEBUG</code>.
+    Enforce strict variable declarations in <em>env</em>.
 
 
     <h3>Parameters:</h3>
@@ -207,34 +238,44 @@
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"><span class="keyword">local</span> _ENV = <span class="global">require</span> <span class="string">"std.strict"</span> (<span class="global">setmetatable</span> ({}, {__index = _G}))</pre>
+        <pre class="example"><span class="keyword">local</span> _ENV = <span class="global">require</span> <span class="string">"strict"</span> (_G)</pre>
     </ul>
 
 </dd>
-</dl>
-    <h2 class="section-header "><a name="Constants"></a>Constants </h2>
-
-    <dl class="function">
     <dt>
-    <a name = "_VERSION"></a>
-    <strong>_VERSION</strong>
+    <a name = "__index"></a>
+    <strong>__index (name)</strong>
     </dt>
     <dd>
-    The release version of strict.
+    Lazy loading of strict submodules.
+ Don't load everything on initial startup, wait until first attempt
+ to access a submodule, and then load it on demand.
 
 
+    <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">_VERSION</span>
+        <li><span class="parameter">name</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
-
-
-
+         submodule name
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a> or <span class="type">nil</span></span>
+        the submodule that was loaded to satisfy the missing
+   <code>name</code>, otherwise <code>nil</code> if nothing was found
+    </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">
+ <span class="keyword">local</span> strict = <span class="global">require</span> <span class="string">"std.strict"</span>
+ <span class="keyword">local</span> version = strict.version</pre>
+    </ul>
 
 </dd>
 </dl>
@@ -244,7 +285,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
-<i style="float:right;">Last updated 2016-01-19 23:01:44 </i>
+<i style="float:right;">Last updated 2016-02-07 22:08:40 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
