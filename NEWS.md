@@ -1,6 +1,9 @@
 # std.strict NEWS - User visible changes
 
-## Noteworthy changes in release 1.0 (2016-02-07) [stable]
+## Noteworthy changes in release ?.? (????-??-??) [?]
+
+
+## Noteworthy changes in std.strict release 1.0 (2016-02-07) [stable]
 
 ### Incompatible changes
 
@@ -17,7 +20,7 @@
     generated `std.strict.version` submodule.
 
 
-## Noteworthy changes in release 1.0 (2016-01-19) [stable]
+## Noteworthy changes in strict release 1.0 (2016-01-19) [stable]
 
 ### New features
 
