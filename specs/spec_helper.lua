@@ -12,6 +12,10 @@ package.path = std.package.normalize ("./lib/?.lua", "./lib/?/init.lua", package
 local LUA = os.getenv "LUA" or "lua"
 
 
+-- Allow use of bare 'unpack' even in Lua 5.3.
+unpack = table.unpack or unpack
+
+
 -- In case we're not using a bleeding edge release of Specl...
 _diagnose = badargs.diagnose
 badargs.diagnose = function (...)
