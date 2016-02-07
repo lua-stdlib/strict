@@ -1,4 +1,21 @@
-# strict NEWS - User visible changes
+# std.strict NEWS - User visible changes
+
+## Noteworthy changes in release 1.0 (2016-02-07) [stable]
+
+### Incompatible changes
+
+  - To avoid clashing with PUC-Rio strict.lua, rename this package to
+    std.strict.  You should change client packages to load from its
+    new location:
+
+    ```lua
+    local strict = require "std.strict"
+    ```
+
+  - To minimise the number of places the release number needs to be
+    updated, the `std.strict._VERSION` constant has been replaced by a
+    generated `std.strict.version` submodule.
+
 
 ## Noteworthy changes in release 1.0 (2016-01-19) [stable]
 

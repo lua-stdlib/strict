@@ -4,19 +4,38 @@ MKDIR	= mkdir -p
 SED	= sed
 SPECL	= specl
 
+VERSION	= 1.0
 
-all: doc
+luadir	= lib/std/strict
+SOURCES =				\
+	$(luadir)/init.lua		\
+	$(luadir)/version.lua		\
+	$(NOTHING_ELSE)
 
 
-doc: doc/config.ld strict.lua
+all: doc $(luadir)/version.lua
+
+
+$(luadir)/version.lua: .FORCE
+	@echo 'return "Strict Variable Declaration / $(VERSION)"' > '$@T';	\
+	if cmp -s '$@' '$@T'; then						\
+	    rm -f '$@T';							\
+	else									\
+	    echo 'echo "Strict Variable Declaration / $(VERSION)" > $@';	\
+	    mv '$@T' '$@';							\
+	fi
+
+doc: doc/config.ld $(SOURCES)
 	$(LDOC) -c doc/config.ld .
 
 doc/config.ld: doc/config.ld.in
-	version=`LUA_PATH=$$(pwd)'/?.lua;;' $(LUA) -e 'io.stdout:write(require"strict"._VERSION)'`; \
-	$(SED) -e "s,@PACKAGE_VERSION@,$$version," '$<' > '$@'
+	$(SED) -e "s,@PACKAGE_VERSION@,$(VERSION)," '$<' > '$@'
 
 
 CHECK_ENV = LUA=$(LUA)
 
-check:
+check: $(SOURCES)
 	LUA=$(LUA) $(SPECL) $(SPECL_OPTS) specs/*_spec.yaml
+
+
+.FORCE:

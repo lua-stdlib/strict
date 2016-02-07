@@ -15,7 +15,7 @@ license (the same license as Lua itself).  There is no warranty.
 
 dir		= "."
 
-file		= "../strict.lua"
+file		= "../lib/std/strict/init.lua"
 
 format		= "markdown"
 

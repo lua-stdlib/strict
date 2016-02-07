@@ -1,3 +1,5 @@
 .DS_Store
-/doc/config.ld
-/strict-*.src.rock
+/*.rock
+/doc
+!/doc/config.ld.in
+/lib/std/strict/version.lua

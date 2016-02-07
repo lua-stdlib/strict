@@ -7,6 +7,8 @@ addons:
 
 env:
   global:
+    - _VERSION=1.0
+
     - LUAJIT_DIR=luajit-2.0
     - LUAJIT_VER=2.0.4
     - LUA53_VER=5.3.2
@@ -113,21 +115,15 @@ install:
        sudo luarocks install --server=http://rocks.moonscript.org/manifests/gvvaughan $rock;
     done'
 
-  # Fudge timestamps on release branches.
-  - 'if test -f configure; then
-      test -f aclocal.m4 && touch aclocal.m4;
-      sleep 1; touch Makefile.in;
-      sleep 1; test -f config.h.in && touch config.h.in;
-      sleep 1; touch configure;
-    fi'
+  - make
 
   # Build from rockspec, forcing uninstall of older luarocks installed
   # above when testing the git rockspec, both for enforcing backwards
   # compatibility by default, and for ease of maintenance.
-  - if test -f 'strict-1.0-1.rockspec'; then
-      sudo luarocks make 'strict-1.0-1.rockspec' LUA="$LUA";
+  - if test -f "std.strict-$_VERSION-1.rockspec"; then
+      sudo luarocks make "std.strict-$_VERSION-1.rockspec" LUA="$LUA";
     else
-      sudo luarocks make --force 'strict-git-1.rockspec' LUA="$LUA";
+      sudo luarocks make 'std.strict-git-1.rockspec' LUA="$LUA";
     fi
 
   # Clean up files created by root

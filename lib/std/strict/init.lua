@@ -13,6 +13,9 @@
 ]]
 
 local error		= error
+local pcall		= pcall
+local rawset		= rawset
+local require		= require
 local setfenv		= setfenv or function () end
 local setmetatable	= setmetatable
 
@@ -33,6 +36,11 @@ end
 
 
 return setmetatable ({
+  --- Module table.
+  -- @table strict
+  -- @field version
+
+
   --- Require variable declarations before use in scope *env*.
   --
   -- Normally the module @{strict:__call} metamethod is all you need,
@@ -85,9 +93,10 @@ return setmetatable ({
       end,
     })
   end,
-
-  _VERSION = "1.0",
 }, {
+  --- Metamethods
+  -- @section Metamethods
+
   --- Enforce strict variable declarations in *env*.
   -- @function strict:__call
   -- @tparam table env lexical environment table
@@ -99,10 +108,22 @@ return setmetatable ({
     setfenv (2, env)
     return env
   end,
+
+  --- Lazy loading of strict submodules.
+  -- Don't load everything on initial startup, wait until first attempt
+  -- to access a submodule, and then load it on demand.
+  -- @function __index
+  -- @string name submodule name
+  -- @treturn table|nil the submodule that was loaded to satisfy the missing
+  --   `name`, otherwise `nil` if nothing was found
+  -- @usage
+  -- local strict = require "std.strict"
+  -- local version = strict.version
+  __index = function (self, name)
+    local ok, t = pcall (require, "std.strict." .. name)
+    if ok then
+      rawset (self, name, t)
+      return t
+    end
+  end,
 })
-
---- Constants.
--- @section constants
-
---- The release version of strict.
--- @string _VERSION 

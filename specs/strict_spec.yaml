@@ -1,15 +1,33 @@
 before:
-  strict = require "strict"
+  this_module = "std.strict"
+
+  M = require (this_module)
+
 
 specify std.strict:
-- describe require:
+- before:
+    M.version = nil              -- previous specs may have autoloaded it
+
+- context when required:
   - it returns a callable:
       expect (getmetatable (strict).__call).not_to_be (nil)
+  - it does not touch the global table:
+      expect (show_apis {added_to="_G", by=this_module}).
+        to_equal {}
+
+- context when lazy loading:
+  - it has no submodules on initial load:
+      for _, v in pairs (M) do
+        expect (type (v)).not_to_be "table"
+      end
+  - it loads submodules on demand:
+      lazy = M.version
+      expect (lazy).to_be (require "std.strict.version")
 
 
 - describe strict:
   - before:
-      f = strict.strict
+      f = M.strict
 
   - it allows assignment to declared variables:
       scope = f { foo = "bar" }
@@ -65,3 +83,13 @@ specify std.strict:
       expect ((function () _G.undefined = "rval" end) ()).
         not_to_raise "undefined"
 
+
+- describe version:
+  - it returns a string:
+      expect (type (M.version)).to_be "string"
+  - it contains package description:
+      expect (string.match (M.version, "Strict Variable Declaration ")).
+        not_to_be (nil)
+  - it ends with a semantic version number:
+      expect (string.match (M.version, "([%.%d]+)%D*$")).
+        not_to_be (nil)
