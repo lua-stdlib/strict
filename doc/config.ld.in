@@ -1,6 +1,6 @@
 -- -*- lua -*-
-title		= "strict @PACKAGE_VERSION@ Reference"
-project		= "strict @PACKAGE_VERSION@"
+title		= "std.strict @PACKAGE_VERSION@ Reference"
+project		= "std.strict @PACKAGE_VERSION@"
 description	= [[
 # Strict Declaration of Variables
 

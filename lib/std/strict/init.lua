@@ -9,7 +9,7 @@
  proxy table to the given environment.  The callable runs `setfenv`
  appropriately in Lua 5.1 interpreters to ensure the semantic equivalence.
 
- @module strict
+ @module std.strict
 ]]
 
 local error		= error
@@ -38,7 +38,7 @@ end
 return setmetatable ({
   --- Module table.
   -- @table strict
-  -- @field version
+  -- @string version release version identifier
 
 
   --- Require variable declarations before use in scope *env*.
@@ -59,8 +59,8 @@ return setmetatable ({
     -- The set of declared variables in this scope.
     local declared = {}
 
-    --- Metamethods
-    -- @section metamethods
+    --- Environment Metamethods
+    -- @section environmentmetamethods
 
     return setmetatable ({}, {
       --- Detect dereference of undeclared variable.
@@ -94,8 +94,8 @@ return setmetatable ({
     })
   end,
 }, {
-  --- Metamethods
-  -- @section Metamethods
+  --- Module Metamethods
+  -- @section modulemetamethods
 
   --- Enforce strict variable declarations in *env*.
   -- @function strict:__call
