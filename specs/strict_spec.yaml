@@ -26,62 +26,81 @@ specify std.strict:
 
 
 - describe strict:
-  - before:
-      f = M.strict
+  - context from module method:
+    - before:
+        f = M.strict
 
-  - it allows assignment to declared variables:
-      scope = f { foo = "bar" }
+    - it allows assignment to declared variables:
+        scope = f { foo = "bar" }
+        expect ((function () scope.foo = "baz" end) ()).
+          not_to_raise "not declared"
+        expect (scope.foo).to_be "baz"
 
-      expect ((function () scope.foo = "baz" end) ()).
-        not_to_raise "not declared"
-      expect (scope.foo).to_be "baz"
+    - it diagnoses assignment to undeclared variable:
+        scope = f { foo = "bar" }
+        expect ((function () scope.undefined = "rval" end) ()).
+          to_raise "assignment to undeclared variable 'undefined'"
 
-  - it diagnoses assignment to undeclared variable:
-      scope = f { foo = "bar" }
+    - it allows reference to declared variables:
+        scope = f { foo = "bar" }
+        expect ((function () return scope.foo end) ()).to_be "bar"
 
-      expect ((function () scope.undefined = "rval" end) ()).
-        to_raise "assignment to undeclared variable 'undefined'"
+    - it diagnoses reference to undeclared variable:
+        scope = f {}
+        expect ((function () return scope.undefined end) ()).
+          to_raise "variable 'undefined' is not declared"
 
-  - it allows reference to declared variables:
-      scope = f { foo = "bar" }
+    - it allows assignemnt to undeclared global variables:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+        defined = "rval"
+        expect (_ENV.defined).to_be "rval"
+        expect ((function () defined = "foo" end) ()).
+          not_to_raise "undeclared variable"
 
-      expect ((function () return scope.foo end) ()).to_be "bar"
+    - it diagnoses assignment to undeclared global variable:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+        expect ((function () undefined = "rval" end) ()).
+          to_raise "assignment to undeclared variable 'undefined'"
 
-  - it diagnoses reference to undeclared variable:
-      scope = f {}
+    - it diagnoses reference to undeclared global variable:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+        expect ((function () foo = undefined end) ()).
+          to_raise "variable 'undefined' is not declared"
 
-      expect ((function () return scope.undefined end) ()).
-        to_raise "variable 'undefined' is not declared"
+    - it does not leak into surrounding scope:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+        expect ((function () _G.undefined = "rval" end) ()).
+          not_to_raise "undefined"
 
-  - it allows assignemnt to undeclared global variables:
-      _ENV = f (setmetatable ({}, {__index=_G}))
-      if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+  - context as callable:
+    - before:
+        f = M
 
-      defined = "rval"
-      expect (_ENV.defined).to_be "rval"
-      expect ((function () defined = "foo" end) ()).
-        not_to_raise "undeclared variable"
+    - it allows assignemnt to undeclared global variables:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        defined = "rval"
+        expect (_ENV.defined).to_be "rval"
+        expect ((function () defined = "foo" end) ()).
+          not_to_raise "undeclared variable"
 
-  - it diagnoses assignment to undeclared global variable:
-      _ENV = f (setmetatable ({}, {__index=_G}))
-      if rawget (_G, "setfenv") then setfenv (1, _ENV) end
+    - it diagnoses assignment to undeclared global variable:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        expect ((function () undefined = "rval" end) ()).
+          to_raise "assignment to undeclared variable 'undefined'"
 
-      expect ((function () undefined = "rval" end) ()).
-        to_raise "assignment to undeclared variable 'undefined'"
+    - it diagnoses reference to undeclared global variable:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        expect ((function () foo = undefined end) ()).
+          to_raise "variable 'undefined' is not declared"
 
-  - it diagnoses reference to undeclared global variable:
-      _ENV = f (setmetatable ({}, {__index=_G}))
-      if rawget (_G, "setfenv") then setfenv (1, _ENV) end
-
-      expect ((function () foo = undefined end) ()).
-        to_raise "variable 'undefined' is not declared"
-
-  - it does not leak into surrounding scope:
-      _ENV = f (setmetatable ({}, {__index=_G}))
-      if rawget (_G, "setfenv") then setfenv (1, _ENV) end
-
-      expect ((function () _G.undefined = "rval" end) ()).
-        not_to_raise "undefined"
+    - it does not leak into surrounding scope:
+        _ENV = f (setmetatable ({}, {__index=_G}))
+        expect ((function () _G.undefined = "rval" end) ()).
+          not_to_raise "undefined"
 
 
 - describe version:
