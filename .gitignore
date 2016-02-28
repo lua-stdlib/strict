@@ -2,3 +2,4 @@
 /*.rock
 /doc
 !/doc/config.ld.in
+/luacov.*.out
