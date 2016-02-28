@@ -12,18 +12,16 @@
  @module std.strict
 ]]
 
-local error		= error
-local pcall		= pcall
-local rawset		= rawset
-local require		= require
-local setfenv		= setfenv or function () end
-local setmetatable	= setmetatable
+local _ENV = {
+  error		= error,
+  pcall		= pcall,
+  rawset	= rawset,
+  require	= require,
+  setfenv	= setfenv or function () end,
+  setmetatable	= setmetatable,
 
-local debug_getinfo	= debug.getinfo
-
-
--- This module implementation only has access to locals imported above.
-local _ENV = {}
+  debug_getinfo	= debug.getinfo,
+}
 setfenv (1, _ENV)
 
 
