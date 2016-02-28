@@ -5,6 +5,7 @@ Copyright (C) 2011-2016 [strict module authors][github]
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://mit-license.org)
 [![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](http://travis-ci.org/lua-stdlib/strict/builds)
+[![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
 [![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
 All variables (including functions!) must be "declared" through a regular
