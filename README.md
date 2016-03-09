@@ -1,10 +1,10 @@
 Diagnose uses of undeclared variables
 =====================================
 
-Copyright (C) 2011-2016 [strict module authors][github]
+Copyright (C) 2011-2016 [std.strict authors][authors]
 
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://mit-license.org)
-[![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](http://travis-ci.org/lua-stdlib/strict/builds)
+[![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
+[![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](https://travis-ci.org/lua-stdlib/strict/builds)
 [![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
 [![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
@@ -19,8 +19,8 @@ appropriately in Lua 5.1 interpreters to ensure the semantic equivalence.
 This is a pure Lua library compatible with [LuaJIT][], [Lua][] 5.1,
 5.2 and 5.3.
 
-[github]: http://github.com/lua-stdlib/strict/ "Github repository"
-[lua]: http://www.lua.org "The Lua Project"
+[authors]: https://github.com/lua-stdlib/strict/blob/master/AUTHORS.md "std.strict contributors"
+[lua]: https://www.lua.org "The Lua Project"
 [luajit]: http://luajit.org "The LuaJIT Project"
 
 
@@ -31,20 +31,20 @@ The simplest and best way to install strict is with [LuaRocks][]. To
 install the latest release (recommended):
 
 ```bash
-    luarocks install strict
+    luarocks install std.strict
 ```
 
 To install current git master (for testing, before submitting a bug
 report for example):
 
 ```bash
-    luarocks install http://raw.githubusercontent.com/lua-stdlib/strict/master/strict-git-1.rockspec
+    luarocks install https://raw.githubusercontent.com/lua-stdlib/strict/master/strict-git-1.rockspec
 ```
 
 The best way to install without [LuaRocks][] is to copy the
-`strict.lua` file into a directory in your package search path.
+`std/strict` directory into your package search path.
 
-[luarocks]: http://www.luarocks.org "Lua package manager"
+[luarocks]: https://www.luarocks.org "Lua package manager"
 
 
 Use
@@ -54,7 +54,7 @@ The strict package returns a callable "functable" that returns an
 environment that requires all variables be declared before use.
 
 ```lua
-    local strict = require "strict"
+    local strict = require "std.strict"
 
     -- For use of the global environment from this scope.
     local _ENV = strict (_G)
@@ -78,8 +78,8 @@ Documentation
 The latest release is [documented with LDoc][github.io].
 Pre-built HTML files are included in the [release tarball][].
 
-[github.io]: http://lua-stdlib.github.io/strict
-[release]: http://lua-stdlib.github.io/strict/releases
+[github.io]: https://lua-stdlib.github.io/strict "Documentation"
+[release]: https://lua-stdlib.github.io/strict/releases "Releases"
 
 
 Bug reports and code contributions
@@ -101,4 +101,5 @@ points when proposing changes:
 
 1. 2-character indentation using SPACES in Lua sources.
 
-[issues]: http://github.com/lua-stdlib/strict/issues
+[github]: https://github.com/lua-stdlib/strict/ "Github repository"
+[issues]: https://github.com/lua-stdlib/strict/issues "Github issues"
