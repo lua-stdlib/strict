@@ -7,13 +7,23 @@ badargs = require "specl.badargs"
 package.path = std.package.normalize ("./lib/?.lua", "./lib/?/init.lua", package.path)
 
 
+
+--[[ ================== ]]--
+--[[ Normalize Lua API. ]]--
+--[[ ================== ]]--
+
+
+local _base	= require "std.strict._base"
+
+len	= _base.len
+pairs	= _base.pairs
+unpack	= table.unpack or unpack
+
+
+
 -- Allow user override of LUA binary used by hell.spawn, falling
 -- back to environment PATH search for "lua" if nothing else works.
 local LUA = os.getenv "LUA" or "lua"
-
-
--- Allow use of bare 'unpack' even in Lua 5.3.
-unpack = table.unpack or unpack
 
 
 -- In case we're not using a bleeding edge release of Specl...

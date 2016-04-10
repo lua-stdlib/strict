@@ -28,7 +28,30 @@ specify std.strict:
 - describe strict:
   - context from module method:
     - before:
+        MAGIC = {"MAGIC"}
         f = M.strict
+
+    - it responds correctly to len:
+        env = {1, foo = "bar", "baz"}
+        scope = f (env)
+        expect (len (scope)).to_be (len (env))
+
+    - it propagates __len metamethod:
+        scope = f (setmetatable ({}, {__len = function () return MAGIC end}))
+        expect (len (scope)).to_be (MAGIC)
+
+    - it responds correctly to pairs:
+        env = {1, foo = "bar", "baz"}
+        scope = f (env)
+        dst = {}
+        for k, v in pairs (scope) do dst[k] = v end
+        expect (dst).to_equal (env)
+
+    - it propagates __pairs metamethod:
+        src, dst = {1, foo = "bar", "baz"}, {}
+        scope = f (setmetatable ({}, {__pairs = function () return pairs (src) end}))
+        for k, v in pairs (scope) do dst[k] = v end
+        expect (dst).to_equal (src)
 
     - it allows assignment to declared variables:
         scope = f { foo = "bar" }
@@ -50,7 +73,7 @@ specify std.strict:
         expect ((function () return scope.undefined end) ()).
           to_raise "variable 'undefined' is not declared"
 
-    - it allows assignemnt to undeclared global variables:
+    - it allows assignment to undeclared global variables:
         _ENV = f (setmetatable ({}, {__index=_G}))
         if rawget (_G, "setfenv") then setfenv (1, _ENV) end
         defined = "rval"
@@ -80,7 +103,29 @@ specify std.strict:
     - before:
         f = M
 
-    - it allows assignemnt to undeclared global variables:
+    - it responds correctly to len:
+        env = {1, foo = "bar", "baz"}
+        scope = f (env)
+        expect (len (scope)).to_be (len (env))
+
+    - it propagates __len metamethod:
+        scope = f (setmetatable ({}, {__len = function () return MAGIC end}))
+        expect (len (scope)).to_be (MAGIC)
+
+    - it responds correctly to pairs:
+        env = {1, foo = "bar", "baz"}
+        scope = f (env)
+        dst = {}
+        for k, v in pairs (scope) do dst[k] = v end
+        expect (dst).to_equal (env)
+
+    - it propagates __pairs metamethod:
+        src, dst = {1, foo = "bar", "baz"}, {}
+        scope = f (setmetatable ({}, {__pairs = function () return pairs (src) end}))
+        for k, v in pairs (scope) do dst[k] = v end
+        expect (dst).to_equal (src)
+
+    - it allows assignment to undeclared global variables:
         _ENV = f (setmetatable ({}, {__index=_G}))
         defined = "rval"
         expect (_ENV.defined).to_be "rval"

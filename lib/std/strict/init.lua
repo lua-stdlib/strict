@@ -12,8 +12,14 @@
  @module std.strict
 ]]
 
+local _ = {
+  base = require "std.strict._base",
+}
+
 local _ENV = {
   error		= error,
+  len		= _.base.len,
+  pairs		= _.base.pairs,
   pcall		= pcall,
   rawset	= rawset,
   require	= require,
@@ -23,6 +29,8 @@ local _ENV = {
   debug_getinfo	= debug.getinfo,
 }
 setfenv (1, _ENV)
+_ = nil
+
 
 
 --- What kind of variable declaration is this?
@@ -74,6 +82,11 @@ return setmetatable ({
         return v
       end,
 
+      --- Proxy `len` calls.
+      -- @function env:__len
+      -- @tparam table t strict table
+      __len = function () return len (env) end,
+
       --- Detect assignment to undeclared variable.
       -- @function env:__newindex
       -- @string n name of the variable being declared
@@ -89,6 +102,11 @@ return setmetatable ({
         declared[n] = true
         env[n] = v
       end,
+
+      --- Proxy `pairs` calls.
+      -- @function env:__pairs
+      -- @tparam table t strict table
+      __pairs = function () return pairs (env) end,
     })
   end,
 }, {
