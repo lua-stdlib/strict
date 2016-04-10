@@ -2,6 +2,7 @@ before:
   this_module = "std.strict"
 
   M = require (this_module)
+  MAGIC = {"MAGIC"}
 
 
 specify std.strict:
@@ -28,29 +29,38 @@ specify std.strict:
 - describe strict:
   - context from module method:
     - before:
-        MAGIC = {"MAGIC"}
         f = M.strict
 
     - it responds correctly to len:
-        env = {1, foo = "bar", "baz"}
-        scope = f (env)
-        expect (len (scope)).to_be (len (env))
+        mt = {__index = _G}
+        scope = setmetatable ({1, foo = "bar", "baz"}, mt)
+        local _ENV = f (scope)
+        expect (len (_ENV)).to_be (len (scope))
 
     - it propagates __len metamethod:
-        scope = f (setmetatable ({}, {__len = function () return MAGIC end}))
-        expect (len (scope)).to_be (MAGIC)
+        mt = {
+          __index = _G,
+          __len   = function () return MAGIC end,
+        }
+        local _ENV = f (setmetatable ({}, mt))
+        expect (len (_ENV)).to_be (MAGIC)
 
     - it responds correctly to pairs:
-        env = {1, foo = "bar", "baz"}
-        scope = f (env)
-        dst = {}
-        for k, v in pairs (scope) do dst[k] = v end
-        expect (dst).to_equal (env)
+        dst, mt = {}, {__index = _G}
+        scope = setmetatable ({1, foo = "bar", "baz"}, mt)
+        local _ENV = f (scope)
+        for k, v in pairs (_ENV) do dst[k] = v end
+        expect (dst).to_equal (scope)
 
     - it propagates __pairs metamethod:
-        src, dst = {1, foo = "bar", "baz"}, {}
-        scope = f (setmetatable ({}, {__pairs = function () return pairs (src) end}))
-        for k, v in pairs (scope) do dst[k] = v end
+        dst, src = {}, {1, foo = "bar", "baz"}
+        mt = {
+          __index = _G,
+          __pairs = function () return pairs (src) end,
+        }
+        scope = setmetatable ({}, mt)
+        local _ENV = f (scope)
+        for k, v in pairs (_ENV) do dst[k] = v end
         expect (dst).to_equal (src)
 
     - it allows assignment to declared variables:
@@ -104,25 +114,35 @@ specify std.strict:
         f = M
 
     - it responds correctly to len:
-        env = {1, foo = "bar", "baz"}
-        scope = f (env)
-        expect (len (scope)).to_be (len (env))
+        mt = {__index = _G}
+        scope = setmetatable ({1, foo = "bar", "baz"}, mt)
+        local _ENV = f (scope)
+        expect (len (_ENV)).to_be (len (scope))
 
     - it propagates __len metamethod:
-        scope = f (setmetatable ({}, {__len = function () return MAGIC end}))
-        expect (len (scope)).to_be (MAGIC)
+        mt = {
+          __index = _G,
+          __len   = function () return MAGIC end,
+        }
+        local _ENV = f (setmetatable ({}, mt))
+        expect (len (_ENV)).to_be (MAGIC)
 
     - it responds correctly to pairs:
-        env = {1, foo = "bar", "baz"}
-        scope = f (env)
-        dst = {}
-        for k, v in pairs (scope) do dst[k] = v end
-        expect (dst).to_equal (env)
+        dst, mt = {}, {__index = _G}
+        scope = setmetatable ({1, foo = "bar", "baz"}, mt)
+        local _ENV = f (scope)
+        for k, v in pairs (_ENV) do dst[k] = v end
+        expect (dst).to_equal (scope)
 
     - it propagates __pairs metamethod:
-        src, dst = {1, foo = "bar", "baz"}, {}
-        scope = f (setmetatable ({}, {__pairs = function () return pairs (src) end}))
-        for k, v in pairs (scope) do dst[k] = v end
+        dst, src = {}, {1, foo = "bar", "baz"}
+        mt = {
+          __index = _G,
+          __pairs = function () return pairs (src) end,
+        }
+        scope = setmetatable ({}, mt)
+        local _ENV = f (scope)
+        for k, v in pairs (_ENV) do dst[k] = v end
         expect (dst).to_equal (src)
 
     - it allows assignment to undeclared global variables:
