@@ -1,5 +1,4 @@
 .DS_Store
 /*.rock
-/doc
-!/doc/config.ld.in
+/doc/config.ld
 /luacov.*.out
