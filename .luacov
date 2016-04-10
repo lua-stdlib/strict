@@ -26,6 +26,7 @@ return {
   -- (exclude overrules include, do not include
   -- the .lua extension, path separator is always '/')
   ["include"] = {
+    "lib/std/strict/_base$",
     "lib/std/strict/init$",
     "lib/std/strict/version$",
   },
