@@ -1,5 +1,8 @@
 # std.strict NEWS - User visible changes
 
+## Noteworthy changes in release ?.? (????-??-??)
+
+
 ## Noteworthy changes in release 1.1 (2016-04-10) [stable]
 
 ### New features

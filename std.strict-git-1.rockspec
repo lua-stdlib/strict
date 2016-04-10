@@ -1,5 +1,5 @@
 package = "std.strict"
-version = "1.1-2"
+version = "git-1"
 
 description = {
   summary = "Check for use of undeclared variables",
@@ -12,8 +12,7 @@ description = {
 }
 
 source = {
-  url = "http://github.com/lua-stdlib/strict/archive/v1.1.zip",
-  dir = "strict-1.1",
+  url = "git://github.com/lua-stdlib/strict.git",
 }
 
 dependencies = {
