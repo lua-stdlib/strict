@@ -1,5 +1,5 @@
 package = "std.strict"
-version = "1.1-1"
+version = "1.1-2"
 
 description = {
   summary = "Check for use of undeclared variables",
