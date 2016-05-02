@@ -116,12 +116,14 @@ return setmetatable ({
   --- Enforce strict variable declarations in *env*.
   -- @function strict:__call
   -- @tparam table env lexical environment table
+  -- @tparam[opt=1] int level stack level for `setfenv`, 1 means
+  --   set caller's environment
   -- @treturn table *env* which must be assigned to `_ENV`
   -- @usage
   -- local _ENV = require "strict" (_G)
-  __call = function (self, env)
+  __call = function (self, env, level)
     env = self.strict (env)
-    setfenv (2, env)
+    setfenv (1 + (level or 1), env)
     return env
   end,
 

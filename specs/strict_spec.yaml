@@ -162,6 +162,16 @@ specify std.strict:
         expect ((function () foo = undefined end) ()).
           to_raise "variable 'undefined' is not declared"
 
+    - it supports optional stack level count:
+        wrapper = function (env)
+          return (f (setmetatable (env, {__index = _G}), 2))
+        end
+        _ENV = wrapper {defined = "rval"}
+        expect ((function () defined = "foo" end) ()).
+          not_to_raise "undeclared variable"
+        expect ((function () undefined = "rval" end) ()).
+          to_raise "assignment to undeclared variable 'undefined'"
+
     - it does not leak into surrounding scope:
         _ENV = f (setmetatable ({}, {__index=_G}))
         expect ((function () _G.undefined = "rval" end) ()).

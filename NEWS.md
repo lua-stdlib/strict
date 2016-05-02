@@ -2,6 +2,11 @@
 
 ## Noteworthy changes in release ?.? (????-??-??)
 
+### New features
+
+  - In order to support `__call` responses from deeper in the call
+    stack, accept an optional `level` argument.
+
 
 ## Noteworthy changes in release 1.1 (2016-04-10) [stable]
 
