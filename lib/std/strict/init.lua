@@ -53,13 +53,15 @@ return setmetatable ({
   -- but you can use this method for more complex situations.
   -- @function strict
   -- @tparam table env lexical environment table
-  -- @treturn table *env* proxy table with metamethods to enforce strict declarations
+  -- @treturn table *env* proxy table with metamethods to enforce strict
+  --   declarations
   -- @usage
   -- local _ENV = setmetatable ({}, {__index = _G})
   -- if require "std.debug_init"._DEBUG.strict then
-  --   _ENV = require "strict".strict (_ENV)
+  --   _ENV = require "std.strict".strict (_ENV)
   -- end
-  -- -- ...and for Lua 5.1 compatibility:
+  -- -- ...and for Lua 5.1 compatibility, without triggering undeclared
+  -- -- variable error:
   -- if rawget (_G, "setfenv") ~= nil then setfenv (1, _ENV) end
   strict = function (env)
     -- The set of declared variables in this scope.
@@ -120,7 +122,7 @@ return setmetatable ({
   --   set caller's environment
   -- @treturn table *env* which must be assigned to `_ENV`
   -- @usage
-  -- local _ENV = require "strict" (_G)
+  -- local _ENV = require "std.strict" (_G)
   __call = function (self, env, level)
     env = self.strict (env)
     setfenv (1 + (level or 1), env)
