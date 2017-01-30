@@ -1,5 +1,11 @@
-.DS_Store
-/*.rock
+*~
+*.o
+*.so
+*.html
+*.src.rock
+/ChangeLog
 /doc
-!/doc/config.ld.in
+/build-aux/config.ld
 /luacov.*.out
+/std.strict-*.tar.gz
+/TAGS

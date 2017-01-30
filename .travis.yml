@@ -3,9 +3,6 @@ language: python
 sudo: false
 
 env:
-  global:
-    - _VERSION=1.0
-
   matrix:
     - LUA="lua=5.3"
     - LUA="lua=5.2"
@@ -19,15 +16,14 @@ before_install:
   - export PATH=$PWD/here/bin:$PATH
 
 install:
-  - luarocks install --server=http://rocks.moonscript.org/manifests/gvvaughan ldoc
+  - luarocks install ldoc
   - luarocks install ansicolors
   - luarocks install specl
   - luarocks install luacov
 
 script:
-  - make
-  - luarocks make
-  - make check SPECL_OPTS='-vfreport --coverage'
+  - luarocks make --force
+  - LUA=$PWD/here/bin/lua specl -vfreport --coverage specs/*_spec.yaml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f luacov.report.out

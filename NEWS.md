@@ -4,6 +4,8 @@
 
 ### New features
 
+  - Builds and installs with `luke` instead of Make.
+
   - In order to support `__call` responses from deeper in the call
     stack, accept an optional `level` argument.
 
@@ -19,7 +21,7 @@
     with a `nil` value, and a `nil` valued key in the environment table
     is the exact criterion for an undeclared variable access.  This
     means that passing a strict environment table to `ipairs` always
-    triggers an "assignment to undeclared variable <#env + 1>" error.
+    triggers an 'assignment to undeclared variable <#env + 1>' error.
 
 ### Incompatible changes
 
@@ -28,7 +30,7 @@
     new location:
 
     ```lua
-    local strict = require "std.strict"
+    local strict = require 'std.strict'
     ```
 
   - To minimise the number of places the release number needs to be
@@ -49,14 +51,14 @@
     do that you can write:
 
     ```lua
-    local strict = require "strict"
-    local _DEBUG = require "std.debug_init"._DEBUG
+    local strict = require 'strict'
+    local _DEBUG = require 'std.debug_init'._DEBUG
 
     local _ENV = _ENV
     if nil ~= (_DEBUG or {}).strict then
-      _ENV = strict.strict (_ENV)
+       _ENV = strict.strict(_ENV)
     end
-    if rawget (_G, "setfenv") ~= nil then
-      setfenv (1, _ENV)
+    if rawget(_G, 'setfenv') ~= nil then
+       setfenv(1, _ENV)
     end
     ```

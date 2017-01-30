@@ -38,7 +38,7 @@ To install current git master (for testing, before submitting a bug
 report for example):
 
 ```bash
-    luarocks install https://raw.githubusercontent.com/lua-stdlib/strict/master/strict-git-1.rockspec
+    luarocks install https://raw.githubusercontent.com/lua-stdlib/strict/master/std.strict-git-1.rockspec
 ```
 
 The best way to install without [LuaRocks][] is to copy the
@@ -54,20 +54,20 @@ The strict package returns a callable "functable" that returns an
 environment that requires all variables be declared before use.
 
 ```lua
-    local strict = require "std.strict"
+   local strict = require 'std.strict'
 
-    -- For use of the global environment from this scope.
-    local _ENV = strict (_G)
+   -- For use of the global environment from this scope.
+   local _ENV = strict(_G)
 
-    -- Or, prevent all access to global environment.
-    local _ENV = strict {}
+   -- Or, prevent all access to global environment.
+   local _ENV = strict{}
 
-    -- Or, control access to limited environment from this scope.
-    local _ENV = strict {
+   -- Or, control access to limited environment from this scope.
+   local _ENV = strict{
       setmetatable = setmetatable,
       type         = type,
       table_unpack = table.unpack or unpack,
-    }
+   }
 ```
 
 
@@ -99,7 +99,17 @@ points when proposing changes:
 0. Follow existing code. There are a lot of useful patterns and avoided
    traps there.
 
-1. 2-character indentation using SPACES in Lua sources.
+1. 3-character indentation using SPACES in Lua sources: It makes rogue
+   TABs easier to see, and lines up nicely with 'if' and 'end' keywords.
+
+2. Simple strings are easiest to type using single-quote delimiters,
+   saving double-quotes for where a string contains apostrophes.
+
+3. Save horizontal space by only using SPACES where the parser requires
+   them.
+
+4. Use vertical spacing to separate out compound statements to help the
+   coverage reports discover untested lines.
 
 [github]: https://github.com/lua-stdlib/strict/ "Github repository"
 [issues]: https://github.com/lua-stdlib/strict/issues "Github issues"

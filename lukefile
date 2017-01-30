@@ -1,0 +1,10 @@
+package  = 'std.strict'
+version  = '$USER'
+
+ldocs    = 'build-aux/config.ld.in'
+
+modules  = {
+   ['std.strict']         = 'lib/std/strict/init.lua',
+   ['std.strict._base']   = 'lib/std/strict/_base.lua',
+   ['std.strict.version'] = 'lib/std/strict/version.lua.in',
+}

@@ -1,29 +1,37 @@
-package = "std.strict"
-version = "git-1"
+package = 'std.strict'
+version = 'git-1'
 
 description = {
-  summary = "Check for use of undeclared variables",
-  detailed = [[
-    Enforce strict declaration of all variables (including functions) in
-    an environment before being used or reassigned from a nested scope.
-  ]],
-  homepage = "http://lua-stdlib.github.io/strict",
-  license = "MIT/X11",
+   summary = 'Check for use of undeclared variables',
+   detailed = [[
+      Enforce strict declaration of all variables (including functions) in
+      an environment before being used or reassigned from a nested scope.
+   ]],
+   homepage = 'http://lua-stdlib.github.io/strict',
+   license = 'MIT/X11',
 }
 
 source = {
-  url = "git://github.com/lua-stdlib/strict.git",
+   url = 'git://github.com/lua-stdlib/strict.git',
 }
 
 dependencies = {
-  "lua >= 5.1, < 5.4",
+   'lua >= 5.1, < 5.4',
 }
 
 build = {
-  type = "builtin",
-  modules = {
-    ["std.strict"]		= "lib/std/strict/init.lua",
-    ["std.strict._base"]	= "lib/std/strict/_base.lua",
-    ["std.strict.version"]	= "lib/std/strict/version.lua",
-  },
+   type = 'command',
+   build_command = 'build-aux/luke'
+      .. ' PACKAGE="' .. package .. '"'
+      .. ' VERSION="' .. version .. '"'
+      .. ' PREFIX="$(PREFIX)"'
+      .. ' LUA="$(LUA)"'
+      .. ' INST_LIBDIR="$(LIBDIR)"'
+      .. ' INST_LUADIR="$(LUADIR)"'
+      ,
+   install_command = 'build-aux/luke install --quiet'
+      .. ' INST_LIBDIR="$(LIBDIR)"'
+      .. ' INST_LUADIR="$(LUADIR)"'
+      ,
+   copy_directories = {'doc'},
 }
