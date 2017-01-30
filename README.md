@@ -1,7 +1,7 @@
 Diagnose uses of undeclared variables
 =====================================
 
-Copyright (C) 2011-2016 [std.strict authors][authors]
+Copyright (C) 2010-2017 [std.strict authors][authors]
 
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
 [![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](https://travis-ci.org/lua-stdlib/strict/builds)

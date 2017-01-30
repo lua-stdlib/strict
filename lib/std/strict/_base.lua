@@ -1,3 +1,7 @@
+--[[
+ Strict variable declarations for Lua 5.1, 5.2 & 5.3
+ Copyright (C) 2014-2017 Gary V. Vaughan
+]]
 --[[--
  Some minimal subset of std.normalize to make sure strict is
  deterministic in its implementation, regardless of the Lua implementation

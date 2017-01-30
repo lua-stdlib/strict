@@ -9,4 +9,4 @@ libraries project he created, and maintained it there for several years
 to work seamlessly with the other stdlib modules.
 
 The original stdlib `strict.lua` code was based on `etc/strict.lua` from
-the PUC Rio Lua 5.0 distribution.
+the PUC Rio Lua 5.1 distribution.
