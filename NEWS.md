@@ -2,6 +2,10 @@
 
 ## Noteworthy changes in release ?.? (????-??-??)
 
+
+
+## Noteworthy changes in release 1.2 (2017-02-04) [stable]
+
 ### New features
 
   - Builds and installs with `luke` instead of Make.
