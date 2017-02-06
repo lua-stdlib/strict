@@ -108,7 +108,7 @@ points when proposing changes:
 3. Save horizontal space by only using SPACES where the parser requires
    them.
 
-4. Use vertical spacing to separate out compound statements to help the
+4. Use vertical space to separate out compound statements to help the
    coverage reports discover untested lines.
 
 [github]: https://github.com/lua-stdlib/strict/ "Github repository"
