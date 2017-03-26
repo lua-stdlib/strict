@@ -8,6 +8,12 @@ Copyright (C) 2010-2017 [std.strict authors][authors]
 [![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
 [![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
+This is a pure Lua library for detecting access to uninitialized
+variables from Lua 5.1 (including LuaJIT), 5.2 and 5.3.  The libraries
+are copyright by their authors (see the [AUTHORS][] file for details),
+and released under the [MIT license][mit] (the same license as Lua
+itself).  There is no warranty.
+
 All variables (including functions!) must be "declared" through a regular
 assignment (even assigning `nil` will do) in a strict scope before being
 used anywhere or assigned to inside a nested scope.
@@ -16,12 +22,10 @@ Use the callable returned by this module to interpose a strictness check
 proxy table to the given environment.  The callable runs `setfenv`
 appropriately in Lua 5.1 interpreters to ensure the semantic equivalence.
 
-This is a pure Lua library compatible with [LuaJIT][], [Lua][] 5.1,
-5.2 and 5.3.
-
 [authors]: https://github.com/lua-stdlib/strict/blob/master/AUTHORS.md "std.strict contributors"
 [lua]: https://www.lua.org "The Lua Project"
 [luajit]: http://luajit.org "The LuaJIT Project"
+[mit]: https://mit-license.org "MIT License"
 
 
 Installation
