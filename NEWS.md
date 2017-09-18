@@ -2,6 +2,9 @@
 
 ## Noteworthy changes in release ?.? (????-??-??)
 
+
+## Noteworthy changes in release 1.3 (2017-09-17) [stable]
+
 ### Bug Fixes
 
   - where available, use setfenv to enforce _ENV table.
