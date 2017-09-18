@@ -4,8 +4,8 @@
  Copyright (C) 2010-2014 Reuben Thomas <rrt@sc3d.org>
 ]]
 
-title		= '@PACKAGE@ @VERSION@ Reference'
-project		= '@PACKAGE@ @VERSION@'
+title		= 'std.strict @PACKAGE_VERSION@ Reference'
+project		= 'std.strict @PACKAGE_VERSION@'
 description	= [[
 # Strict Declaration of Variables
 

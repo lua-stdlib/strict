@@ -1,11 +1,13 @@
-*~
+*~A
 *.o
 *.so
 *.html
 *.src.rock
+.DS_Store
 /ChangeLog
 /doc
 /build-aux/config.ld
+/lib/std/strict/version.lua
 /luacov.*.out
-/std.strict-*.tar.gz
+/strict-*.tar.gz
 /TAGS

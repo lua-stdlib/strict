@@ -1,0 +1,181 @@
+# Strict variable declarations for Lua 5.1, 5.2 & 5.3
+# Copyright (C) 2014-2017 Gary V. Vaughan
+
+before:
+  this_module = 'std.strict'
+
+  M = require(this_module)
+  MAGIC = {'MAGIC'}
+
+
+specify std.strict:
+- before:
+    M.version = nil              -- previous specs may have autoloaded it
+
+- context when required:
+  - it returns a callable:
+      expect(getmetatable(strict).__call).not_to_be(nil)
+  - it does not touch the global table:
+      expect(show_apis {added_to='_G', by=this_module}).
+        to_equal {}
+
+- context when lazy loading:
+  - it has no submodules on initial load:
+      for _, v in pairs(M) do
+        expect(type(v)).not_to_be 'table'
+      end
+  - it loads submodules on demand:
+      lazy = M.version
+      expect(lazy).to_be(require 'std.strict.version')
+
+
+- describe strict:
+  - context from module method:
+    - before:
+        f = M.strict
+
+    - it responds correctly to len:
+        mt = {__index=_G}
+        scope = setmetatable({1, foo='bar', 'baz'}, mt)
+        local _ENV = f(scope)
+        expect(len(_ENV)).to_be(len(scope))
+
+    - it propagates __len metamethod:
+        mt = {
+           __index = _G,
+           __len   = function() return MAGIC end,
+        }
+        local _ENV = f(setmetatable({}, mt))
+        expect(len(_ENV)).to_be(MAGIC)
+
+    - it responds correctly to pairs:
+        dst, mt = {}, {__index=_G}
+        scope = setmetatable({1, foo='bar', 'baz'}, mt)
+        local _ENV = f(scope)
+        for k, v in pairs(_ENV) do dst[k] = v end
+        expect(dst).to_equal(scope)
+
+    - it propagates __pairs metamethod:
+        dst, src = {}, {1, foo='bar', 'baz'}
+        mt = {
+           __index = _G,
+           __pairs = function() return pairs(src) end,
+        }
+        scope = setmetatable({}, mt)
+        local _ENV = f(scope)
+        for k, v in pairs(_ENV) do dst[k] = v end
+        expect(dst).to_equal(src)
+
+    - it allows assignment to declared variables:
+        scope = f {foo='bar'}
+        expect((function() scope.foo = 'baz' end)()).
+           not_to_raise 'not declared'
+        expect(scope.foo).to_be 'baz'
+
+    - it diagnoses assignment to undeclared variable:
+        scope = f {foo='bar'}
+        expect((function() scope.undefined = 'rval' end)()).
+           to_raise "assignment to undeclared variable 'undefined'"
+
+    - it allows reference to declared variables:
+        scope = f {foo='bar'}
+        expect((function() return scope.foo end)()).to_be 'bar'
+
+    - it diagnoses reference to undeclared variable:
+        scope = f {}
+        expect((function() return scope.undefined end)()).
+           to_raise "variable 'undefined' is not declared"
+
+    - it allows assignment to undeclared global variables:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        if rawget(_G, 'setfenv') then setfenv(1, _ENV) end
+        defined = 'rval'
+        expect(_ENV.defined).to_be 'rval'
+        expect((function() defined = 'foo' end)()).
+           not_to_raise 'undeclared variable'
+
+    - it diagnoses assignment to undeclared global variable:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        if rawget(_G, 'setfenv') then setfenv(1, _ENV) end
+        expect((function() undefined = 'rval' end)()).
+           to_raise "assignment to undeclared variable 'undefined'"
+
+    - it diagnoses reference to undeclared global variable:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        if rawget(_G, 'setfenv') then setfenv(1, _ENV) end
+        expect((function() foo = undefined end)()).
+           to_raise "variable 'undefined' is not declared"
+
+    - it does not leak into surrounding scope:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        if rawget(_G, 'setfenv') then setfenv(1, _ENV) end
+        expect((function() _G.undefined = 'rval' end)()).
+           not_to_raise 'undefined'
+
+  - context as callable:
+    - before:
+        f = M
+
+    - it responds correctly to len:
+        mt = {__index=_G}
+        scope = setmetatable({1, foo='bar', 'baz'}, mt)
+        local _ENV = f(scope)
+        expect(len(_ENV)).to_be(len(scope))
+
+    - it propagates __len metamethod:
+        mt = {
+           __index = _G,
+           __len   = function() return MAGIC end,
+        }
+        local _ENV = f(setmetatable({}, mt))
+        expect(len(_ENV)).to_be(MAGIC)
+
+    - it responds correctly to pairs:
+        dst, mt = {}, {__index=_G}
+        scope = setmetatable({1, foo='bar', 'baz'}, mt)
+        local _ENV = f(scope)
+        for k, v in pairs(_ENV) do dst[k] = v end
+        expect(dst).to_equal(scope)
+
+    - it propagates __pairs metamethod:
+        dst, src = {}, {1, foo='bar', 'baz'}
+        mt = {
+           __index = _G,
+           __pairs = function() return pairs(src) end,
+        }
+        scope = setmetatable({}, mt)
+        local _ENV = f(scope)
+        for k, v in pairs(_ENV) do dst[k] = v end
+        expect(dst).to_equal(src)
+
+    - it allows assignment to undeclared global variables:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        defined = 'rval'
+        expect(_ENV.defined).to_be 'rval'
+        expect((function() defined = 'foo' end)()).
+           not_to_raise 'undeclared variable'
+
+    - it diagnoses assignment to undeclared global variable:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        expect((function() undefined = 'rval' end)()).
+           to_raise "assignment to undeclared variable 'undefined'"
+
+    - it diagnoses reference to undeclared global variable:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        expect((function() foo = undefined end)()).
+           to_raise "variable 'undefined' is not declared"
+
+    - it supports optional stack level count:
+        wrapper = function(env)
+           return(f(setmetatable(env, {__index=_G}), 2))
+        end
+        _ENV = wrapper {defined='rval'}
+        expect((function() defined = 'foo' end)()).
+           not_to_raise 'undeclared variable'
+        expect((function() undefined = 'rval' end)()).
+           to_raise "assignment to undeclared variable 'undefined'"
+
+    - it does not leak into surrounding scope:
+        _ENV = f(setmetatable({}, {__index=_G}))
+        expect((function() _G.undefined = 'rval' end)()).
+           not_to_raise 'undefined'

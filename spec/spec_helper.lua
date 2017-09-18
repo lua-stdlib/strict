@@ -17,11 +17,11 @@ package.path = std.package.normalize('./lib/?.lua', './lib/?/init.lua', package.
 --[[ ================== ]]--
 
 
-local _base	= require 'std.strict._base'
+local _base = require 'std.strict._base'
 
-len	= _base.len
-pairs	= _base.pairs
-unpack	= table.unpack or unpack
+len = _base.len
+pairs = _base.pairs
+unpack = table.unpack or unpack
 
 
 

@@ -18,24 +18,20 @@
  @module std.strict
 ]]
 
-local _ = {
-   base = require 'std.strict._base',
-}
 
 local _ENV = {
-   error	= error,
-   len		= _.base.len,
-   pairs	= _.base.pairs,
-   pcall	= pcall,
-   rawset	= rawset,
-   require	= require,
-   setfenv	= setfenv or function() end,
+   error = error,
+   len = require 'std.strict._base'.len,
+   pairs = require 'std.strict._base'.pairs,
+   pcall = pcall,
+   rawset = rawset,
+   require = require,
+   setfenv = setfenv or function() end,
    setmetatable	= setmetatable,
 
    debug_getinfo = debug.getinfo,
 }
 setfenv(1, _ENV)
-_ = nil
 
 
 
@@ -133,7 +129,7 @@ return setmetatable({
    -- local _ENV = require 'std.strict'(_G)
    __call = function(self, env, level)
       env = self.strict(env)
-      setfenv(1 +(level or 1), env)
+      setfenv(1 + (level or 1), env)
       return env
    end,
 

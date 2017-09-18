@@ -22,8 +22,9 @@ install:
   - luarocks install luacov
 
 script:
-  - luarocks make --force
-  - LUA=$PWD/here/bin/lua specl -vfreport --coverage specs/*_spec.yaml
+  - make
+  - luarocks make
+  - make check SPECL_OPTS='-vfreport --coverage'
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f luacov.report.out
