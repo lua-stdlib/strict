@@ -1,4 +1,4 @@
-local _MODREV, _SPECREV = 'git', '-1'
+local _MODREV, _SPECREV = '1.3', '-1'
 
 package = 'std.strict'
 version = _MODREV .. _SPECREV
@@ -14,9 +14,8 @@ description = {
 }
 
 source = {
-   url = 'git://github.com/lua-stdlib/strict.git',
-   --url = 'http://github.com/lua-stdlib/strict/archive/v' .. _MODREV .. '.zip',
-   --dir = 'strict-' .. _MODREV,
+   url = 'http://github.com/lua-stdlib/strict/archive/v' .. _MODREV .. '.zip',
+   dir = 'strict-' .. _MODREV,
 }
 
 dependencies = {
