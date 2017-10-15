@@ -58,13 +58,15 @@ return setmetatable({
    -- @treturn table *env* proxy table with metamethods to enforce strict
    --    declarations
    -- @usage
-   -- local _ENV = setmetatable({}, {__index = _G})
-   -- if require 'std.debug_init'._DEBUG.strict then
-   --    _ENV = require 'std.strict'.strict(_ENV)
-   -- end
-   -- -- ...and for Lua 5.1 compatibility, without triggering undeclared
-   -- -- variable error:
-   -- if rawget(_G, 'setfenv') ~= nil then setfenv(1, _ENV) end
+   --   local _ENV = setmetatable({}, {__index = _G})
+   --   if require 'std._debug'.strict then
+   --      _ENV = require 'std.strict'.strict(_ENV)
+   --   end
+   --   -- ...and for Lua 5.1 compatibility, without triggering undeclared
+   --   -- variable error:
+   --   if rawget(_G, 'setfenv') ~= nil then
+   --      setfenv(1, _ENV)
+   --   end
    strict = function(env)
       -- The set of declared variables in this scope.
       local declared = {}
@@ -126,7 +128,7 @@ return setmetatable({
    --    set caller's environment
    -- @treturn table *env* which must be assigned to `_ENV`
    -- @usage
-   -- local _ENV = require 'std.strict'(_G)
+   --   local _ENV = require 'std.strict'(_G)
    __call = function(self, env, level)
       env = self.strict(env)
       setfenv(1 + (level or 1), env)
@@ -141,8 +143,8 @@ return setmetatable({
    -- @treturn table|nil the submodule that was loaded to satisfy the missing
    --    `name`, otherwise `nil` if nothing was found
    -- @usage
-   -- local strict = require 'std.strict'
-   -- local version = strict.version
+   --   local strict = require 'std.strict'
+   --   local version = strict.version
    __index = function(self, name)
       local ok, t = pcall(require, 'std.strict.' .. name)
       if ok then

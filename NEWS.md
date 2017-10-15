@@ -2,6 +2,24 @@
 
 ## Noteworthy changes in release ?.? (????-??-??)
 
+### Documentation changes
+
+  - removed references to `_DEBUG` and `require 'std.debug_init'`; for
+    completeness, with a modern version of 'std._debug' you could:
+
+    ```lua
+    local _ENV = setmetatable({}, {__index=_G})
+    if require 'std._debug'.strict == true then
+       _ENV = require 'std.strict'.strict(_ENV)
+    end
+    if rawget(_G, 'setfenv') ~= nil then
+       setfenv(1, _ENV)
+    end
+    ```
+
+    ...or you could just let the 'std.normalize' library take care of
+    all this for you!
+
 
 ## Noteworthy changes in release 1.3 (2017-09-17) [stable]
 
