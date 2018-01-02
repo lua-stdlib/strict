@@ -1,4 +1,4 @@
-Copyright (C) 2014-2017 strict authors
+Copyright (C) 2010-2018 std.strict authors
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

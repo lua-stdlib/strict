@@ -1,3 +1,6 @@
+#  Strict variable declarations for Lua 5.1, 5.2 & 5.3
+#  Copyright (C) 2010-2018 std.strict authors
+
 LDOC	= ldoc
 LUA	= lua
 MKDIR	= mkdir -p
@@ -22,7 +25,7 @@ $(luadir)/version.lua: .FORCE
 	if cmp -s '$@' '$@T'; then						\
 	    rm -f '$@T';							\
 	else									\
-	    echo 'echo "Strict Variable Declaration / $(VERSION)" > $@';	\
+	    echo 'echo return "Strict Variable Declaration / $(VERSION)" > $@';	\
 	    mv '$@T' '$@';							\
 	fi
 

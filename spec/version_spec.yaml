@@ -1,5 +1,5 @@
 # Strict variable declarations for Lua 5.1, 5.2 and 5.3
-# Copyright (C) 2011-2017 strict authors
+# Copyright (C) 2011-2018 std.strict authors
 
 before:
   this_module = 'std.strict.version'
