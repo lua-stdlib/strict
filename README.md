@@ -10,7 +10,7 @@ Copyright (C) 2010-2018 [std.strict authors][authors]
 [![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
 This is a pure Lua library for detecting access to uninitialized
-variables from [Lua][] 5.1 (including [LuaJIT)][], 5.2 and 5.3.  The libraries
+variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2 and 5.3.  The libraries
 are copyright by their authors (see the [AUTHORS][] file for details),
 and released under the [MIT license][mit] (the same license as Lua
 itself).  There is no warranty.
