@@ -1,6 +1,6 @@
 # Strict's contributors
 
-This file list major contributors to [strict][]. If you think you
+This file list major contributors to [strict][std.strict]. If you think you
 should be in it, please raise a [github issue][issues]. Thanks also to
 all those who have contributed bug fixes, suggestions and support.
 
