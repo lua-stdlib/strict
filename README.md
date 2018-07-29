@@ -10,7 +10,7 @@ Copyright (C) 2010-2018 [std.strict authors][authors]
 [![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
 This is a pure Lua library for detecting access to uninitialized
-variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2 and 5.3.  The libraries
+variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2, 5.3 and 5.4.  The libraries
 are copyright by their authors (see the [AUTHORS][] file for details),
 and released under the [MIT license][mit] (the same license as Lua
 itself).  There is no warranty.
@@ -55,9 +55,9 @@ Use
 
 The strict package returns a callable, which when called returns a
 strict environment table that requires all variables be declared before
-use. For compatibility with Lua 5.2 and 5.3, you must assign this
-environment table to `_ENV`; if necessary, `setfenv` will be called
-automatically for compatibility with Lua 5.1 and LuaJIT.
+use. For compatibility with Lua > 5.1, you must assign this environment
+table to `_ENV`; if necessary, `setfenv` will be called automatically
+for compatibility with Lua 5.1 and LuaJIT.
 
 ```lua
    -- For example, use of the global environment from this scope.

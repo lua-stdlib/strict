@@ -1,5 +1,5 @@
 --[[
- Strict variable declarations for Lua 5.1, 5.2 & 5.3
+ Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
  Copyright (C) 2006-2018 std.strict authors
 ]]
 --[[--

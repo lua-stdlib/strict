@@ -1,5 +1,5 @@
 --[[
- Strict variable declarations for Lua 5.1, 5.2 & 5.3
+ Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
  Copyright (C) 2014-2018 std.strict authors
 ]]
 local inprocess = require 'specl.inprocess'
@@ -61,7 +61,13 @@ function luaproc(code, arg, stdin)
    local cmd = {LUA, f, unpack(arg)}
    -- inject env and stdin keys separately to avoid truncating `...` in
    -- cmd constructor
-   cmd.env = { LUA_PATH=package.path, LUA_INIT='', LUA_INIT_5_2='' }
+   cmd.env = {
+      LUA_PATH=package.path,
+      LUA_INIT='',
+      LUA_INIT_5_2='',
+      LUA_INIT_5_3='',
+      LUA_INIT_5_4='',
+   }
    cmd.stdin = stdin
    local proc = hell.spawn(cmd)
    os.remove(f)
