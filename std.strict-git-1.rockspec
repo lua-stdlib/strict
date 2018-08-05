@@ -33,7 +33,7 @@ build = {
 }
 
 if _MODREV == 'git' then
-   dependencies[#dependencies + 1] = 'ldoc'
+   build.copy_directories = nil
 
    source = {
       url = 'git://github.com/lua-stdlib/strict.git',

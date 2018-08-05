@@ -3,27 +3,42 @@ language: python
 sudo: false
 
 env:
+  global:
+    - TOOLS='ldoc luacov'
+    - DEPENDS='ansicolors specl'
   matrix:
-    - LUA="lua=5.4"
-    - LUA="lua=5.3"
-    - LUA="lua=5.2"
-    - LUA="lua=5.1"
-    - LUA="luajit=2.1"
-    - LUA="luajit=2.0"
+    - VLUA=lua=5.4
+    - VLUA=lua=5.3
+    - VLUA=lua=5.2
+    - VLUA=lua=5.1
+    - VLUA=luajit=2.1
+    - VLUA=luajit=2.0
 
 before_install:
   - pip install hererocks
-  - hererocks here --luarocks 3 --$LUA
-  - export PATH=$PWD/here/bin:$PATH
+  - hererocks here --luarocks 3 --$VLUA --patch
+  - export PATH="$PWD/here/bin:$PATH"
+
+  # Some tools are not yet ported to Lua 5.4
+  - if test "$VLUA" == 'lua=5.4'; then
+      hererocks tools --lua=5.1;
+      PATH="$PATH:$PWD/tools/bin";
+    fi
 
 install:
-  - luarocks install ldoc
-  - luarocks install ansicolors
-  - luarocks install specl
-  - luarocks install luacov
+  # Install rocks we depend on
+  - for rock in $DEPENDS${EXTRA_ROCKS+ $EXTRA_ROCKS}; do
+      luarocks install $rock;
+    done
+  - if test "$VLUA" == 'lua=5.4'; then
+      LUAROCKS_TOOLARGS=" --lua-dir=$PWD/tools --tree=$PWD/tools";
+    fi;
+    for rock in $TOOLS; do
+      luarocks$LUAROCKS_TOOLARGS install $rock;
+    done
 
 script:
-  - make
+  - make all doc
   - luarocks make
   - make check SPECL_OPTS='-vfreport --coverage'
 
