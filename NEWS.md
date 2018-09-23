@@ -2,6 +2,9 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+
+## Noteworthy changes in release 1.3.2 (2018-09-23) [stable]
+
 ### New Features
 
   - Initial support for Lua 5.4.
@@ -32,7 +35,7 @@
 
 ### Bug Fixes
 
-  - where available, use setfenv to enforce _ENV table.
+  - where available, use setfenv to enforce `_ENV` table.
 
 
 ## Noteworthy changes in release 1.2 (2017-02-04) [stable]
