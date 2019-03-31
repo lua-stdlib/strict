@@ -1,6 +1,6 @@
 --[[
  Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
- Copyright (C) 2014-2018 std.strict authors
+ Copyright (C) 2014-2019 std.strict authors
 ]]
 local inprocess = require 'specl.inprocess'
 local hell      = require 'specl.shell'
