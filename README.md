@@ -7,7 +7,6 @@ Copyright (C) 2010-2020 [std.strict authors][authors]
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
 [![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](https://travis-ci.org/lua-stdlib/strict/builds)
 [![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
-[![Stories in Ready](https://badge.waffle.io/lua-stdlib/strict.png?label=ready&title=Ready)](https://waffle.io/lua-stdlib/strict)
 
 This is a pure Lua library for detecting access to uninitialized
 variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2, 5.3 and 5.4.  The libraries
