@@ -15,7 +15,7 @@ and released under the [MIT license][mit] (the same license as Lua
 itself).  There is no warranty.
 
 When using this module, all variables (including functions!) must be 
-declared through a regularassignment (even assigning `nil` will do) in a
+declared through a regular assignment (even assigning `nil` will do) in a
 strict scope before being used anywhere or assigned to inside a nested
 scope.
 
