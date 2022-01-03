@@ -1,5 +1,5 @@
 #  Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
-#  Copyright (C) 2010-2020 std.strict authors
+#  Copyright (C) 2010-2022 std.strict authors
 
 LDOC	= ldoc
 LUA	= lua
