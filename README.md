@@ -5,7 +5,7 @@ by the [strict project][github]
 Copyright (C) 2010-2022 [std.strict authors][authors]
 
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
-[![travis-ci status](https://secure.travis-ci.org/lua-stdlib/strict.png?branch=master)](https://travis-ci.org/lua-stdlib/strict/builds)
+[![workflow status](https://github.com/lua-stdlib/strict/actions/workflows/spec.yml/badge.svg?branch=master)](https://github.com/lua-stdlib/strict/actions)
 [![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
 
 This is a pure Lua library for detecting access to uninitialized
