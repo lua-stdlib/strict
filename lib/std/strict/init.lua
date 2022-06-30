@@ -17,23 +17,109 @@
 ]]
 
 
-local _ENV = {
-   error = error,
-   len = require 'std.strict._base'.len,
-   pairs = require 'std.strict._base'.pairs,
-   pcall = pcall,
-   rawset = rawset,
-   require = require,
-   setfenv = setfenv or function() end,
-   setmetatable	= setmetatable,
-
-   debug_getinfo = debug.getinfo,
-}
-setfenv(1, _ENV)
+local setfenv = setfenv or function() end
+local debug_getinfo = debug.getinfo
 
 
+-- Return callable objects.
+-- @function callable
+-- @param x an object or primitive
+-- @return `true` if *x* can be called, otherwise `false`
+-- @usage
+--   (callable(functable) or function()end)(args, ...)
+local function callable(x)
+   -- Careful here!
+   -- Most versions of Lua don't recurse functables, so make sure you
+   -- always put a real function in __call metamethods.  Consequently,
+   -- no reason to recurse here.
+   -- func=function() print 'called' end
+   -- func() --> 'called'
+   -- functable=setmetatable({}, {__call=func})
+   -- functable() --> 'called'
+   -- nested=setmetatable({}, {__call=function(self, ...) return functable(...)end})
+   -- nested() -> 'called'
+   -- notnested=setmetatable({}, {__call=functable})
+   -- notnested()
+   -- --> stdin:1: attempt to call global 'nested' (a table value)
+   -- --> stack traceback:
+   -- -->	stdin:1: in main chunk
+   -- -->		[C]: in ?
+   if type(x) == 'function' then
+      return x
+   end
+   return (getmetatable(x) or {}).__call
+end
 
---- What kind of variable declaration is this?
+
+-- Return named metamethod, if callable, otherwise `nil`.
+-- @param x item to act on
+-- @string n name of metamethod to look up
+-- @treturn function|nil metamethod function, if callable, otherwise `nil`
+local function getmetamethod(x, n)
+   return callable((getmetatable(x) or {})[n])
+end
+
+
+-- Length of a string or table object without using any metamethod.
+-- @function rawlen
+-- @tparam string|table x object to act on
+-- @treturn int raw length of *x*
+-- @usage
+--    --> 0
+--    rawlen(setmetatable({}, {__len=function() return 42}))
+local function rawlen(x)
+   -- Lua 5.1 does not implement rawlen, and while # operator ignores
+   -- __len metamethod, `nil` in sequence is handled inconsistently.
+   if type(x) ~= 'table' then
+      return #x
+   end
+
+   local n = #x
+   for i = 1, n do
+      if x[i] == nil then
+         return i -1
+      end
+   end
+   return n
+end
+
+
+-- Deterministic, functional version of core Lua `#` operator.
+--
+-- Respects `__len` metamethod (like Lua 5.2+).   Otherwise, always return
+-- one less than the lowest integer index with a `nil` value in *x*, where
+-- the `#` operator implementation might return the size of the array part
+-- of a table.
+-- @function len
+-- @param x item to act on
+-- @treturn int the length of *x*
+-- @usage
+--    x = {1, 2, 3, nil, 5}
+--    --> 5 3
+--    print(#x, len(x))
+local function len(x)
+   return (getmetamethod(x, '__len') or rawlen)(x)
+end
+
+
+-- Like Lua `pairs` iterator, but respect `__pairs` even in Lua 5.1.
+-- @function pairs
+-- @tparam table t table to act on
+-- @treturn function iterator function
+-- @treturn table *t*, the table being iterated over
+-- @return the previous iteration key
+-- @usage
+--    for k, v in pairs {'a', b='c', foo=42} do process(k, v) end
+if not not pairs(setmetatable({},{__pairs=function() return false end})) then
+   local _pairs = pairs
+
+   -- Add support for __pairs when missing.
+   pairs = function(t)
+      return(getmetamethod(t, '__pairs') or _pairs)(t)
+   end
+end
+
+-- What kind of variable declaration is this?
 -- @treturn string 'C', 'Lua' or 'main'
 local function what()
    local d = debug_getinfo(3, 'S')

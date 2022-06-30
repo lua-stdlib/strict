@@ -16,11 +16,50 @@ package.path = std.package.normalize('./lib/?.lua', './lib/?/init.lua', package.
 --[[ Normalize Lua API. ]]--
 --[[ ================== ]]--
 
+local function callable(x)
+   if type(x) == 'function' then
+      return x
+   end
+   return (getmetatable(x) or {}).__call
+end
 
-local _base = require 'std.strict._base'
 
-len = _base.len
-pairs = _base.pairs
+local function getmetamethod(x, n)
+   return callable((getmetatable(x) or {})[n])
+end
+
+
+function rawlen(x)
+   if type(x) ~= 'table' then
+      return #x
+   end
+   local n = #x
+   for i = 1, n do
+      if x[i] == nil then
+         return i -1
+      end
+   end
+   return n
+end
+
+
+function len(x)
+   return (getmetamethod(x, '__len') or rawlen)(x)
+end
+
+
+if not not pairs(setmetatable({},{__pairs=function() return false end})) then
+   local _pairs = pairs
+
+   pairs = function(t)
+      local m = (getmetatable(t) or {}).__pairs
+      if type(m) ~= 'function' then
+         m = _pairs
+      end
+      return m(t)
+   end
+end
+
 unpack = table.unpack or unpack
 
 

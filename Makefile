@@ -11,7 +11,6 @@ VERSION	= git
 
 luadir	= lib/std/strict
 SOURCES =				\
-	$(luadir)/_base.lua		\
 	$(luadir)/init.lua		\
 	$(luadir)/version.lua		\
 	$(NOTHING_ELSE)

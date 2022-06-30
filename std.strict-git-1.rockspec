@@ -26,7 +26,6 @@ build = {
    type = 'builtin',
    modules = {
       ['std.strict']		= 'lib/std/strict/init.lua',
-      ['std.strict._base']	= 'lib/std/strict/_base.lua',
       ['std.strict.version']	= 'lib/std/strict/version.lua',
    },
    copy_directories = {'doc'},

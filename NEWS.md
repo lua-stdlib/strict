@@ -2,6 +2,14 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+### New Features
+
+  - Support importing into another project directly with:
+
+    ```sh
+    $ cp ../strict/lib/std/strict/init.lua lib/std/strict.lua
+    ```
+
 
 ## Noteworthy changes in release 1.3.2 (2018-09-23) [stable]
 
