@@ -17,7 +17,7 @@
 ]]
 
 
-local setfenv = setfenv or function() end
+local setfenv = rawget(_G, 'setfenv') or function() end
 local debug_getinfo = debug.getinfo
 
 
@@ -110,14 +110,16 @@ end
 -- @return the previous iteration key
 -- @usage
 --    for k, v in pairs {'a', b='c', foo=42} do process(k, v) end
-if not not pairs(setmetatable({},{__pairs=function() return false end})) then
-   local _pairs = pairs
-
-   -- Add support for __pairs when missing.
-   pairs = function(t)
-      return(getmetamethod(t, '__pairs') or _pairs)(t)
+local pairs = (function(f)
+   if not f(setmetatable({},{__pairs=function() return false end})) then
+      return f
    end
-end
+
+   return function(t)
+      return(getmetamethod(t, '__pairs') or f)(t)
+   end
+end)(pairs)
+
 
 -- What kind of variable declaration is this?
 -- @treturn string 'C', 'Lua' or 'main'

@@ -48,19 +48,24 @@ function len(x)
 end
 
 
-if not not pairs(setmetatable({},{__pairs=function() return false end})) then
-   local _pairs = pairs
-
-   pairs = function(t)
-      local m = (getmetatable(t) or {}).__pairs
-      if type(m) ~= 'function' then
-         m = _pairs
-      end
-      return m(t)
+pairs = (function(f)
+   if not f(setmetatable({},{__pairs=function() return false end})) then
+      return f
    end
-end
+
+   return function(t)
+      return(getmetamethod(t, '__pairs') or f)(t)
+   end
+end)(pairs)
+
 
 unpack = table.unpack or unpack
+
+
+
+--[[ ================= ]]--
+--[[ Helper functions. ]]--
+--[[ ================= ]]--
 
 
 
@@ -70,12 +75,13 @@ local LUA = os.getenv 'LUA' or 'lua'
 
 
 -- In case we're not using a bleeding edge release of Specl...
-_diagnose = badargs.diagnose
-badargs.diagnose = function(...)
-   if have_typecheck then
-      return _diagnose(...)
+badargs.diagnose = (function(f)
+   return function(...)
+      if have_typecheck then
+         return f(...)
+      end
    end
-end
+end)(badargs.diagnose)
 
 
 local function mkscript(code)
