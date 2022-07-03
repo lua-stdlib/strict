@@ -24,7 +24,7 @@ local debug_getinfo = debug.getinfo
 -- Return callable objects.
 -- @function callable
 -- @param x an object or primitive
--- @return `true` if *x* can be called, otherwise `false`
+-- @return *x* if *x* can be called, otherwise `nil`
 -- @usage
 --   (callable(functable) or function()end)(args, ...)
 local function callable(x)
