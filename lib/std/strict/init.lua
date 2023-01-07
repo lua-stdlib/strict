@@ -1,6 +1,6 @@
 --[[
  Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
- Copyright (C) 2006-2022 std.strict authors
+ Copyright (C) 2006-2023 std.strict authors
 ]]
 --[[--
  Diagnose uses of undeclared variables.

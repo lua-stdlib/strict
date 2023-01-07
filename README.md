@@ -2,7 +2,7 @@ Diagnose uses of undeclared variables
 =====================================
 
 by the [strict project][github]
-Copyright (C) 2010-2022 [std.strict authors][authors]
+Copyright (C) 2010-2023 [std.strict authors][authors]
 
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
 [![workflow status](https://github.com/lua-stdlib/strict/actions/workflows/spec.yml/badge.svg?branch=master)](https://github.com/lua-stdlib/strict/actions)
