@@ -1,4 +1,4 @@
-local _MODREV, _SPECREV = 'git', '-1'
+local _MODREV, _SPECREV = '1.4', '-1'
 
 package = 'std.strict'
 version = _MODREV .. _SPECREV

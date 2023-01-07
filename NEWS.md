@@ -1,7 +1,5 @@
 # std.strict NEWS - User visible changes
 
-## Noteworthy changes in release ?.? (????-??-??) [?]
-
 
 ## Noteworthy changes in release 1.4 (2023-01-07) [stable]
 
