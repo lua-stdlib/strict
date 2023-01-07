@@ -2,6 +2,9 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+
+## Noteworthy changes in release 1.4 (2023-01-07) [stable]
+
 ### New Features
 
   - Support importing into another project directly with:
