@@ -7,7 +7,7 @@ MKDIR	= mkdir -p
 SED	= sed
 SPECL	= specl
 
-VERSION	= git
+VERSION	= 1.4.1
 
 luadir	= lib/std/strict
 SOURCES =				\

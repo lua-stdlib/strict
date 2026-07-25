@@ -1,13 +1,10 @@
 # std.strict NEWS - User visible changes
 
-## Noteworthy changes in release ?.? (????-??-??) [?]
-
-
 ## Noteworthy changes in release 1.4.1 (2026-07-25) [stable]
 
 ### New Features
 
-  - Initial support for Lua 5.5.
+  - Initial support for Lua 5.4.
 
 
 ## Noteworthy changes in release 1.4 (2023-01-07) [stable]
