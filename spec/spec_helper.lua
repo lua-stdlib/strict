@@ -1,6 +1,6 @@
 --[[
- Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
- Copyright (C) 2014-2023 std.strict authors
+ Strict variable declarations for Lua 5.1, 5.2, 5.3, 5.4 & 5.5
+ Copyright (C) 2014-2026 std.strict authors
 ]]
 local inprocess = require 'specl.inprocess'
 local hell      = require 'specl.shell'
@@ -112,6 +112,7 @@ function luaproc(code, arg, stdin)
       LUA_INIT_5_2='',
       LUA_INIT_5_3='',
       LUA_INIT_5_4='',
+      LUA_INIT_5_5='',
    }
    cmd.stdin = stdin
    local proc = hell.spawn(cmd)

@@ -1,6 +1,6 @@
 --[[
- Strict variable declarations for Lua 5.1, 5.2, 5.3 & 5.4.
- Copyright (C) 2010-2023 std.strict authors
+ Strict variable declarations for Lua 5.1, 5.2, 5.3, 5.4 & 5.5
+ Copyright (C) 2010-2026 std.strict authors
 ]]
 
 title		= 'std.strict @PACKAGE_VERSION@ Reference'
@@ -9,7 +9,7 @@ description	= [[
 # Strict Declaration of Variables
 
 This is a light-weight library for Lua 5.1 (including LuaJIT), 5.2,
-5.3 and 5.4 written in pure Lua.
+5.3, 5.4 and 5.5 written in pure Lua.
 
 ## LICENSE
 

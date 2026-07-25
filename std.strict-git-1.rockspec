@@ -3,13 +3,16 @@ local _MODREV, _SPECREV = 'git', '-1'
 package = 'std.strict'
 version = _MODREV .. _SPECREV
 
+rockspec_format = '3.0'
+
 description = {
    summary = 'Check for use of undeclared variables',
    detailed = [[
       Enforce strict declaration of all variables (including functions) in
       an environment before being used or reassigned from a nested scope.
    ]],
-   homepage = 'http://lua-stdlib.github.io/strict',
+   homepage = 'https://lua-stdlib.github.io/strict',
+   issues_url = 'https://github.com/lua-stdlib/strict/issues',
    license = 'MIT/X11',
 }
 
@@ -19,7 +22,11 @@ source = {
 }
 
 dependencies = {
-   'lua >= 5.1, < 5.5',
+   'lua >= 5.1, < 5.6',
+}
+
+build_dependencies = {
+   'ldoc',
 }
 
 build = {

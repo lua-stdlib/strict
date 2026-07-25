@@ -2,17 +2,17 @@ Diagnose uses of undeclared variables
 =====================================
 
 by the [strict project][github]
-Copyright (C) 2010-2023 [std.strict authors][authors]
+Copyright (C) 2010-2026 [std.strict authors][authors]
 
 [![License](https://img.shields.io/:license-mit-blue.svg)](https://mit-license.org)
 [![workflow status](https://github.com/lua-stdlib/strict/actions/workflows/spec.yml/badge.svg?branch=master)](https://github.com/lua-stdlib/strict/actions)
 [![codecov.io](https://codecov.io/github/lua-stdlib/strict/coverage.svg?branch=master)](https://codecov.io/github/lua-stdlib/strict?branch=master)
 
 This is a pure Lua library for detecting access to uninitialized
-variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2, 5.3 and 5.4.  The libraries
-are copyright by their authors (see the [AUTHORS][] file for details),
-and released under the [MIT license][mit] (the same license as Lua
-itself).  There is no warranty.
+variables from [Lua][] 5.1 (including [LuaJIT][]), 5.2, 5.3, 5.4 and
+5.5.  The libraries are copyright by their authors (see the
+[AUTHORS][] file for details), and released under the
+[MIT license][mit] (the same license as Lua itself).  There is no warranty.
 
 When using this module, all variables (including functions!) must be 
 declared through a regular assignment (even assigning `nil` will do) in a
