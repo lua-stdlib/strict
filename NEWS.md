@@ -4,7 +4,7 @@
 
 ### New Features
 
-  - Initial support for Lua 5.4.
+  - Initial support for Lua 5.5.
 
 
 ## Noteworthy changes in release 1.4 (2023-01-07) [stable]

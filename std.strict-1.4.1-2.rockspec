@@ -1,4 +1,4 @@
-local _MODREV, _SPECREV = '1.4.1', '-1'
+local _MODREV, _SPECREV = '1.4.1', '-2'
 
 package = 'std.strict'
 version = _MODREV .. _SPECREV
@@ -23,10 +23,6 @@ source = {
 
 dependencies = {
    'lua >= 5.1, < 5.6',
-}
-
-build_dependencies = {
-   'ldoc',
 }
 
 build = {
