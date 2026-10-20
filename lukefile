@@ -14,3 +14,20 @@ modules  = {
    {['std.strict']         = 'lib/std/strict/init.lua'},
    {['std.strict.version'] = 'lib/std/strict/version.lua.in'},
 }
+
+-- `luke release version=X.Y` adds the release to NEWS.md, writes the
+-- release rockspec, points the README badges at the release branch,
+-- commits the LDocs, and publishes them to gh-pages.
+release  = {
+   news         = 'NEWS.md',
+   rockspec     = 'std.strict-dev-1.rockspec',
+   add          = {'doc/'},
+   replacements = {
+      {['README.md'] = {
+         {['?branch=master'] = '?branch=release-v@version@'},
+      }},
+   },
+   ['gh-pages'] = {
+      {['.'] = 'doc/'},
+   },
+}
