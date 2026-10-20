@@ -21,9 +21,9 @@ jobs:
       contents: read
       id-token: write
 
-    # Specl's own dependencies include stdlib 41, with its old std.strict,
-    # so std.strict's dependencies go into a tree of their own, the only
-    # one the examples search.
+    # Specl's own dependencies include typecheck, which some cells test
+    # without, so std.strict's dependencies go into a tree of their own,
+    # the only one the examples search.
     env:
       DEPS: ${{ github.workspace }}/deps
 
