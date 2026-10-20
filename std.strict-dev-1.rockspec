@@ -1,4 +1,4 @@
-local _MODREV, _SPECREV = 'git', '-1'
+local _MODREV, _SPECREV = 'dev', '-1'
 
 package = 'std.strict'
 version = _MODREV .. _SPECREV
@@ -17,7 +17,7 @@ description = {
 }
 
 source = {
-   url = 'http://github.com/lua-stdlib/strict/archive/v' .. _MODREV .. '.zip',
+   url = 'https://github.com/lua-stdlib/strict/archive/v' .. _MODREV .. '.zip',
    dir = 'strict-' .. _MODREV,
 }
 
@@ -38,10 +38,10 @@ build = {
    copy_directories = {'doc'},
 }
 
-if _MODREV == 'git' then
+if _MODREV == 'dev' then
    build.copy_directories = nil
 
    source = {
-      url = 'git://github.com/lua-stdlib/strict.git',
+      url = 'git+https://github.com/lua-stdlib/strict.git',
    }
 end

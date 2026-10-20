@@ -45,7 +45,7 @@ jobs:
           # Specl and typecheck fixes for std.strict are not released yet.
           luarocks install https://raw.githubusercontent.com/gvvaughan/typecheck/master/typecheck-dev-1.rockspec
           luarocks install https://raw.githubusercontent.com/gvvaughan/specl/master/specl-dev-1.rockspec
-          luarocks --tree="$DEPS" install --only-deps std.strict-git-1.rockspec
+          luarocks --tree="$DEPS" install --only-deps std.strict-dev-1.rockspec
           test -n "${{ matrix.typecheck }}" && luarocks --tree="$DEPS" install --deps-mode=all https://raw.githubusercontent.com/gvvaughan/typecheck/master/typecheck-dev-1.rockspec || true
 
       - name: build
