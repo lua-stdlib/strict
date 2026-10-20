@@ -2,6 +2,9 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+
+## Noteworthy changes in release 1.5 (2026-10-20) [stable]
+
 ### New features
 
   - std.strict builds with luke again, instead of make.  To install
