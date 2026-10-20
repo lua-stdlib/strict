@@ -12,31 +12,61 @@ jobs:
       fail-fast: false
       matrix:
         lua-version: ["5.5", "5.4", "5.3", "5.2", "5.1", "luajit"]
+        typecheck: ["typecheck", ""]
 
     runs-on: ubuntu-latest
+
+    # Specl's own dependencies include typecheck and the old std.strict
+    # from stdlib 41, so std.strict's dependencies go into a tree of
+    # their own, the only one the examples search.
+    env:
+      DEPS: ${{ github.workspace }}/deps
 
     steps:
       - uses: actions/checkout@v7
 
-      - uses: leafo/gh-actions-lua@v13
+      - uses: luarocks/gh-actions-lua@v14
         with:
           luaVersion: ${{ matrix.lua-version }}
 
-      - uses: leafo/gh-actions-luarocks@v6
+      - uses: luarocks/gh-actions-luarocks@v7
 
       - name: install
         run: |
           sudo apt-get update -q -q --yes
           sudo apt-get install -y libyaml-dev
-          luarocks install ansicolors
+          # LuaRocks 3.13.0 crashes writing the namespace of a namespaced
+          # dependency on Lua 5.1 (luarocks/luarocks#1831), so install
+          # gvvaughan/ldoc by hand, before anything else needs an ldoc.
           luarocks install --server=https://luarocks.org/manifests/gvvaughan ldoc
+          printf gvvaughan > "$(luarocks show --rock-dir ldoc)/rock_namespace"
+          luarocks install ansicolors
           luarocks install luacov
-          luarocks install specl
+          # Specl and typecheck fixes for std.strict are not released yet.
+          luarocks install https://raw.githubusercontent.com/gvvaughan/typecheck/master/typecheck-dev-1.rockspec
+          luarocks install https://raw.githubusercontent.com/gvvaughan/specl/master/specl-dev-1.rockspec
+          luarocks --tree="$DEPS" install --only-deps std.strict-git-1.rockspec
+          test -n "${{ matrix.typecheck }}" && luarocks --tree="$DEPS" install --deps-mode=all https://raw.githubusercontent.com/gvvaughan/typecheck/master/typecheck-dev-1.rockspec || true
 
       - name: build
         run: |
           make all doc
-          luarocks make
+
+      - name: paths
+        run: |
+          V=$(lua -e 'print((_VERSION:gsub("^Lua ", "")))')
+          echo "LUA_PATH=$DEPS/share/lua/$V/?.lua;$DEPS/share/lua/$V/?/init.lua" >> "$GITHUB_ENV"
+          echo "LUA_CPATH=$DEPS/lib/lua/$V/?.so" >> "$GITHUB_ENV"
+
+      - name: check optional modules
+        run: |
+          # Fail if a dependency installed a module this matrix cell omits.
+          lua -e "
+            local want = '${{ matrix.typecheck }}' ~= ''
+            local have = pcall(require, 'typecheck')
+            print('typecheck', have and 'installed' or 'not installed')
+            assert(have == want, 'typecheck installation does not match matrix')
+          "
 
       - name: test
         run: |
