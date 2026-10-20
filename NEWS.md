@@ -2,6 +2,15 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+### New features
+
+  - std.strict builds with luke again, instead of make.  To install
+    current git master, use the `std.strict-dev-1.rockspec`:
+
+    ```bash
+    luarocks install https://raw.githubusercontent.com/lua-stdlib/strict/master/std.strict-dev-1.rockspec
+    ```
+
 
 ## Noteworthy changes in release 1.4.1 (2026-07-25) [stable]
 

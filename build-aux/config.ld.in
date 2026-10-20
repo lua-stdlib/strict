@@ -3,9 +3,9 @@
  Copyright (C) 2010-2026 std.strict authors
 ]]
 
-title		= 'std.strict @PACKAGE_VERSION@ Reference'
-project		= 'std.strict @PACKAGE_VERSION@'
-description	= [[
+title               = 'std.strict @version@ Reference'
+project             = 'std.strict @version@'
+description         = [[
 # Strict Declaration of Variables
 
 This is a light-weight library for Lua 5.1 (including LuaJIT), 5.2,
@@ -17,12 +17,12 @@ The code is copyright by its authors, and released under the MIT
 license (the same license as Lua itself).  There is no warranty.
 ]]
 
-dir		= '../doc'
+dir                 = '../doc'
 
-file		= '../lib/std/strict/init.lua'
+file                = '../lib/std/strict/init.lua'
 
-format		= 'markdown'
+format              = 'markdown'
 
-sort		= false
+sort                = false
 
 backtick_references = false

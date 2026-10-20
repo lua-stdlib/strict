@@ -19,5 +19,5 @@ specify std.strict.version:
   - it describes this module:
       expect(M).to_match '^Strict Variable Declaration '
   - it ends with a release number:
-      expect(M).to_match.any_of {' git$', ' %d[%.%d]*$'}
+      expect(M).to_match.any_of {' dev$', ' %d[%.%d]*$'}
 

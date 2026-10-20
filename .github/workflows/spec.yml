@@ -50,7 +50,9 @@ jobs:
 
       - name: build
         run: |
-          make all doc
+          # Install into specl's tree, off the examples' search path, so
+          # they still test the std.strict in this tree.
+          luarocks make --force
 
       - name: paths
         run: |
@@ -70,5 +72,5 @@ jobs:
 
       - name: test
         run: |
-          make check SPECL_OPTS='-vfreport --coverage'
+          luarocks test
           bash <(curl -s https://codecov.io/bash) -f luacov.report.out

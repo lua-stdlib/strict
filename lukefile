@@ -1,0 +1,16 @@
+--[[
+ Strict variable declarations for Lua 5.1, 5.2, 5.3, 5.4 & 5.5
+ Copyright (C) 2010-2026 std.strict authors
+]]
+
+luke_format = 0
+
+package  = 'std.strict'
+version  = '$USER'
+
+ldocs    = 'build-aux/config.ld.in'
+
+modules  = {
+   {['std.strict']         = 'lib/std/strict/init.lua'},
+   {['std.strict.version'] = 'lib/std/strict/version.lua.in'},
+}
