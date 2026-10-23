@@ -12,6 +12,7 @@ ldocs    = 'build-aux/config.ld.in'
 
 modules  = {
    {['std.strict']         = 'lib/std/strict/init.lua'},
+   {['std.strict._normalize'] = 'lib/std/strict/_normalize.lua'},
    {['std.strict.version'] = 'lib/std/strict/version.lua.in'},
 }
 
