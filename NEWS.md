@@ -2,6 +2,13 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+### Bug fixes
+
+  - std.strict no longer raises an error for an object whose
+    `__metatable` field is not a table, such as `true`, when it asks
+    whether the object can be called, or for its `__len` or `__pairs`
+    metamethod.
+
 
 ## Noteworthy changes in release 1.5 (2026-10-20) [stable]
 
