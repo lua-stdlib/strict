@@ -21,12 +21,6 @@ jobs:
       contents: read
       id-token: write
 
-    # Specl's own dependencies include typecheck, which some cells test
-    # without, so std.strict's dependencies go into a tree of their own,
-    # the only one the examples search.
-    env:
-      DEPS: ${{ github.workspace }}/deps
-
     steps:
       - uses: actions/checkout@v7
 
@@ -45,27 +39,17 @@ jobs:
           # gvvaughan/ldoc by hand, before anything else needs an ldoc.
           luarocks install --server=https://luarocks.org/manifests/gvvaughan ldoc
           printf gvvaughan > "$(luarocks show --rock-dir ldoc)/rock_namespace"
-          luarocks install ansicolors
-          luarocks install luacov
-          luarocks install specl
-          luarocks --tree="$DEPS" make --only-deps
-          test -n "${{ matrix.typecheck }}" && luarocks --tree="$DEPS" install --deps-mode=all typecheck || true
+          luarocks make --only-deps
+          test -n "${{ matrix.typecheck }}" && luarocks install typecheck || true
 
       - name: build
         run: |
-          # Install into specl's tree, off the examples' search path, so
-          # they still test the std.strict in this tree.
           luarocks make --force
-
-      - name: paths
-        run: |
-          V=$(lua -e 'print((_VERSION:gsub("^Lua ", "")))')
-          echo "LUA_PATH=$DEPS/share/lua/$V/?.lua;$DEPS/share/lua/$V/?/init.lua" >> "$GITHUB_ENV"
-          echo "LUA_CPATH=$DEPS/lib/lua/$V/?.so" >> "$GITHUB_ENV"
 
       - name: check optional modules
         run: |
           # Fail if a dependency installed a module this matrix cell omits.
+          eval "$(luarocks path)"
           lua -e "
             local want = '${{ matrix.typecheck }}' ~= ''
             local have = pcall(require, 'typecheck')
