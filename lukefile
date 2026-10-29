@@ -8,13 +8,10 @@ luke_format = 0
 package  = 'std.strict'
 version  = '$USER'
 
+-- LuaRocks builds the modules from the rockspec, which is how `luke release`
+-- builds them too, so what is left is for `luke`, to build the LDocs, and
+-- for `luke release`.
 ldocs    = 'build-aux/config.ld.in'
-
-modules  = {
-   {['std.strict']         = 'lib/std/strict/init.lua'},
-   {['std.strict._normalize'] = 'lib/std/strict/_normalize.lua'},
-   {['std.strict.version'] = 'lib/std/strict/version.lua.in'},
-}
 
 release  = {
    news               = 'NEWS.md',

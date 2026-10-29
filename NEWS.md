@@ -2,6 +2,14 @@
 
 ## Noteworthy changes in release ?.? (????-??-??) [?]
 
+### New features
+
+  - std.strict is built from the `build` table of its rockspec, by the
+    `luarocks-build-luke` LuaRocks build backend, which LuaRocks
+    installs for the build, so there is no `build-aux/luke` build to
+    run, and no build without LuaRocks.  Building LDocs, which a release
+    commits, no longer needs a build dependency of its own.
+
 ### Bug fixes
 
   - std.strict no longer raises an error for an object whose

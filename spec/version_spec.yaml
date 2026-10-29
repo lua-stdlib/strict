@@ -18,6 +18,6 @@ specify std.strict.version:
 - describe version:
   - it describes this module:
       expect(M).to_match '^Strict Variable Declaration '
-  - it ends with a release number:
-      expect(M).to_match.any_of {' dev$', ' %d[%.%d]*$'}
+  - it ends with the release number or the stamp of a development build:
+      expect(M).to_match.any_of {' %d[%.%d]*$', ' [%w_.-]+/%x+$'}
 

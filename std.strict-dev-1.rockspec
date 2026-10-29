@@ -25,17 +25,20 @@ dependencies = {
    'lua >= 5.1, < 5.6',
 }
 
+build_dependencies = {
+   'luarocks-build-luke >= 0.3.1',
+}
+
 build = {
-   type = 'command',
-   build_command = '$(LUA) build-aux/luke'
-      .. ' package="' .. package .. '"'
-      .. ' version="' .. _MODREV .. '"'
-      .. ' PREFIX="$(PREFIX)"'
-      .. ' LUA="$(LUA)"'
-      ,
-   install_command = '$(LUA) build-aux/luke install --quiet'
-      .. ' INST_LUADIR="$(LUADIR)"'
-      ,
+   type = 'luke',
+
+   modules = {
+      {['std.strict']            = 'lib/std/strict/init.lua'},
+      {['std.strict._normalize'] = 'lib/std/strict/_normalize.lua'},
+      {['std.strict.version']    = 'lib/std/strict/version.lua.in'},
+   },
+
+   -- A release commits its LDocs to install.
    copy_directories = {'doc'},
 }
 
@@ -52,14 +55,14 @@ test = {
 
 if _MODREV == 'dev' then
    -- luarocks.org's ldoc fails on Lua 5.5; gvvaughan's works.
-   build_dependencies = {'gvvaughan/ldoc'}
+   build_dependencies[#build_dependencies + 1] = 'gvvaughan/ldoc'
+
+   -- Stamp a development build with who made it, and from which commit.
+   build.version = '$USER/$gitref'
 
    build.copy_directories = nil
 
    source = {
       url = 'git+https://github.com/lua-stdlib/strict.git',
    }
-else
-   -- A release commits its LDocs, so don't build them again.
-   build.build_command = build.build_command .. ' LDOC=true'
 end
