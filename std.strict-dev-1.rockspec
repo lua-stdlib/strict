@@ -44,7 +44,7 @@ build = {
 
 test_dependencies = {
    'luacov',
-   'specl >= 17',
+   'specl >= 17.1',
 }
 
 test = {
